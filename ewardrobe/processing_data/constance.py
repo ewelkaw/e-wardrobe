@@ -1,0 +1,16 @@
+COLUMNS = [
+    "product_name",
+    "mrp",
+    "price",
+    "pdp_url",
+    "brand_name",
+    "product_category",
+    "retailer",
+    "description",
+    "rating",
+    "review_count",
+    "style_attributes",
+    "total_sizes",
+    "available_size",
+    "color",
+]
