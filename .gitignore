@@ -6,8 +6,6 @@ __pycache__/
 # C extensions
 *.so
 
-# CSV files
-*.csv
 
 # Distribution / packaging
 .Python
@@ -106,3 +104,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 __pycache__/
+
+# secrets
+secrets.json
