@@ -21,7 +21,7 @@ class Color(models.Model):
 
 
 class Product(models.Model):
-    class SIZE(Enum):
+    class Size(Enum):
         XS = "XS"
         S = "S"
         M = "M"
@@ -43,7 +43,7 @@ class Product(models.Model):
     product_category = models.ForeignKey(Category, on_delete=models.CASCADE)
     retailer = models.ForeignKey(Retailer, on_delete=models.CASCADE)
     size = models.CharField(
-        max_length=4, choices=[x.value for x in SIZE], default=SIZE.get_value("M"),
+        max_length=4, choices=[x.value for x in Size], default=Size.get_value("M"),
     )
     color = models.ForeignKey(Color, on_delete=models.CASCADE)
 
