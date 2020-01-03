@@ -13,28 +13,28 @@ class DateAddedMixin(models.Model):
 
 
 class Brand(models.Model):
-    brand_name = models.CharField(max_length=25)
+    brand_name = models.CharField(max_length=100)
 
 
 class Category(models.Model):
-    category = models.CharField(max_length=25)
+    category = models.CharField(max_length=100)
 
 
 class Retailer(models.Model):
-    retailer = models.CharField(max_length=25)
+    retailer = models.CharField(max_length=100)
 
 
 class Color(models.Model):
-    color = models.CharField(max_length=25)
+    color = models.CharField(max_length=100)
 
 
 class Product(DateAddedMixin, models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     url = models.URLField()
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=800)
     rating = models.DecimalField(max_digits=3, decimal_places=2)
-    reviews_count = models.PositiveIntegerField()
+    review_count = models.PositiveIntegerField()
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     product_category = models.ForeignKey(Category, on_delete=models.CASCADE)
     retailer = models.ForeignKey(Retailer, on_delete=models.CASCADE)

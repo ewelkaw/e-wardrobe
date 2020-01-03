@@ -36,3 +36,8 @@ python manage.py migrate
 ```
 python manage.py runserver
 ```
+
+4. Loading data
+```
+python manage.py runscript load_data
+```

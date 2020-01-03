@@ -1,8 +1,9 @@
-import pandas
-import random
 from pathlib import Path
-from constants import COLUMNS
-from .ewardrobe_app.models import Brand, Category, Retailer, Color, Product
+
+import pandas
+
+from ewardrobe_app.models import Brand, Category, Color, Product, Retailer
+from processing_data.constants import COLUMNS
 
 
 class DataLoader:
@@ -31,11 +32,11 @@ class DataLoader:
             color, _ = Color.objects.get_or_create(color=row["color"])
             Product.objects.create(
                 name=row["product_name"],
-                price=row["price"],
+                price=float(row["price"].split("-")[0]),
                 url=row["pdp_url"],
                 description=row["description"],
-                rating=row["description"],
-                reviews_count=row["description"],
+                rating=float(row["rating"]),
+                review_count=int(row["review_count"]),
                 brand=brand,
                 product_category=category,
                 retailer=retailer,
@@ -48,8 +49,4 @@ class DataLoader:
             data = data.append(
                 self.merge_data_sources(file), ignore_index=True, sort=True
             )
-        DataLoader.load_data(data)
-
-
-if __name__ == "__main__":
-    DataLoader().run()
+        DataLoader.load_data(data.fillna(0))
