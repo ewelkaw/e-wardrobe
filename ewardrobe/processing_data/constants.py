@@ -1,3 +1,5 @@
+from pathlib import Path
+
 COLUMNS = [
     "product_name",
     "price",
@@ -10,3 +12,5 @@ COLUMNS = [
     "review_count",
     "color",
 ]
+
+FILESDIR = Path(__file__).absolute().parent.parent.joinpath("data")

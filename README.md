@@ -6,26 +6,6 @@ brew install postgresql
 psql
 ```
 
-Creating database:
-```
-CREATE DATABASE ewardrobe_db;
-
-CREATE USER "user" WITH PASSWORD 'secret_password';
-
-ALTER ROLE "user" SET client_encoding TO 'utf8';
-
-ALTER ROLE "user" SET default_transaction_isolation TO 'read committed';
-
-ALTER ROLE "user" SET timezone TO 'UTC';
-
-GRANT ALL PRIVILEGES ON DATABASE ewardrobe_db TO "user";
-```
-
-Exit postgres shell:
-```
-\q
-```
-
 2. Migrations
 ```bash
 python manage.py makemigrations
@@ -40,4 +20,9 @@ python manage.py runserver
 4. Loading data
 ```
 python manage.py runscript load_data
+```
+
+5. Running tests
+```
+python manage.py test
 ```

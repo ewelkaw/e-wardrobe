@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_extensions",
     "ewardrobe_app",
+    "processing_data",
 ]
 
 MIDDLEWARE = [

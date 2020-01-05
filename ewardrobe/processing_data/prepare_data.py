@@ -3,17 +3,19 @@ from pathlib import Path
 import pandas
 
 from ewardrobe_app.models import Brand, Category, Color, Product, Retailer
-from processing_data.constants import COLUMNS
+from processing_data.constants import COLUMNS, FILESDIR
 
 
 class DataLoader:
+    def __init__(self, filesdir=FILESDIR):
+        self.filesdir = filesdir
+
     @property
     def filenames(self) -> list:
-        filesdir = Path(__file__).absolute().parent.parent.joinpath("data")
-        filenames = [file for file in filesdir.iterdir() if file.suffix == ".csv"]
+        filenames = [file for file in self.filesdir.iterdir() if file.suffix == ".csv"]
         return filenames
 
-    def merge_data_sources(self, file) -> pandas.DataFrame:
+    def load_data_from_source(self, file) -> pandas.DataFrame:
         temp_data = pandas.read_csv(file, header=0)
         temp_data["price"].replace(to_replace=r"\$", value="", regex=True, inplace=True)
         temp_data = temp_data.drop(
@@ -22,7 +24,7 @@ class DataLoader:
         return temp_data
 
     @staticmethod
-    def load_data(data):
+    def load_data_to_db(data: pandas.DataFrame):
         for index, row in data.iterrows():
             brand, _ = Brand.objects.get_or_create(brand_name=row["brand_name"])
             category, _ = Category.objects.get_or_create(
@@ -32,7 +34,7 @@ class DataLoader:
             color, _ = Color.objects.get_or_create(color=row["color"])
             Product.objects.create(
                 name=row["product_name"],
-                price=float(row["price"].split("-")[0]),
+                price=float(row["price"]),
                 url=row["pdp_url"],
                 description=row["description"],
                 rating=float(row["rating"]),
@@ -47,6 +49,6 @@ class DataLoader:
         data = pandas.DataFrame(columns=COLUMNS)
         for file in self.filenames:
             data = data.append(
-                self.merge_data_sources(file), ignore_index=True, sort=True
+                self.load_data_from_source(file), ignore_index=True, sort=True
             )
-        DataLoader.load_data(data.fillna(0))
+        DataLoader.load_data_to_db(data.fillna(0))
