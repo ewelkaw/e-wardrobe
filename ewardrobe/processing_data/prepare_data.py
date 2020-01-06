@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import pandas
 
 from ewardrobe_app.models import Brand, Category, Color, Product, Retailer
@@ -16,7 +14,9 @@ class DataLoader:
         return filenames
 
     def load_data_from_source(self, file) -> pandas.DataFrame:
-        temp_data = pandas.read_csv(file, header=0)
+        temp_data = pandas.read_csv(
+            file, header=0, dtype={"price": str, "rating": float}
+        )
         temp_data["price"].replace(to_replace=r"\$", value="", regex=True, inplace=True)
         temp_data = temp_data.drop(
             ["mrp", "style_attributes", "total_sizes", "available_size"], axis=1,
@@ -26,6 +26,7 @@ class DataLoader:
     @staticmethod
     def load_data_to_db(data: pandas.DataFrame):
         for index, row in data.iterrows():
+            print(row)
             brand, _ = Brand.objects.get_or_create(brand_name=row["brand_name"])
             category, _ = Category.objects.get_or_create(
                 category=row["product_category"]
@@ -34,11 +35,11 @@ class DataLoader:
             color, _ = Color.objects.get_or_create(color=row["color"])
             Product.objects.create(
                 name=row["product_name"],
-                price=float(row["price"]),
+                price=row["price"].split("-")[0],
                 url=row["pdp_url"],
                 description=row["description"],
-                rating=float(row["rating"]),
-                review_count=int(row["review_count"]),
+                rating=row["rating"],
+                review_count=row["review_count"],
                 brand=brand,
                 product_category=category,
                 retailer=retailer,

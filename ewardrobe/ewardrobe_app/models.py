@@ -33,7 +33,7 @@ class Product(DateAddedMixin, models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     url = models.URLField()
     description = models.CharField(max_length=800)
-    rating = models.DecimalField(max_digits=3, decimal_places=2)
+    rating = models.DecimalField(max_digits=6, decimal_places=2)
     review_count = models.PositiveIntegerField()
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     product_category = models.ForeignKey(Category, on_delete=models.CASCADE)

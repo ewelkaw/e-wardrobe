@@ -2,7 +2,7 @@ from collections import defaultdict
 from pathlib import Path
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 
-import pandas as pd
+import pandas
 from django.test import TestCase
 
 from ewardrobe_app.models import Brand, Category, Color, Product, Retailer
@@ -13,16 +13,19 @@ from processing_data.prepare_data import DataLoader
 class TestDataLoader(TestCase):
     def setUp(self):
         data = defaultdict(list)
-        here_columns = COLUMNS[:]
-        here_columns.extend(
+        extended_columns = COLUMNS[:]
+        extended_columns.extend(
             ["mrp", "style_attributes", "total_sizes", "available_size"]
         )
-        for column in here_columns:
+        for column in extended_columns:
             if column in ["price", "rating", "review_count"]:
-                data[column].extend(list(range(0, 10)))
+                data[column].extend(
+                    ["1", "10", "5", "8", "12", "67", "21", "35", "99", "109"]
+                )
             else:
                 data[column].extend(10 * ["test"])
-        self.dataframe = pd.DataFrame(data, columns=here_columns)
+        self.dataframe = pandas.DataFrame(data, columns=extended_columns)
+        self.dataframe = self.dataframe.astype(str)
         self.dir = TemporaryDirectory()
 
         self.csv_1 = NamedTemporaryFile(
