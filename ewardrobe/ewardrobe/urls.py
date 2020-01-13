@@ -15,7 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth.decorators import login_required
+
+from ewardrobe_app.views.main import MainView
+from ewardrobe_app.views.welcome import WelcomeView
+from ewardrobe_app.views.register import UserRegisterView
+from ewardrobe_app.views.login import UserLoginView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
+    path("", WelcomeView.as_view(), name="welcome"),
+    path("register/", UserRegisterView.as_view(), name="register"),
+    path("login/", UserLoginView.as_view(), name="login"),
+    path("main/", login_required(MainView.as_view()), name="main"),
 ]

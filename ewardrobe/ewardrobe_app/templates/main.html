@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <nav class="navbar sticky-top navbar-dark bg-dark">
+        <a class="navbar-brand " href="#">Logout</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+    <title>Welcome!</title>
+</head>
+
+
+<body>
+
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to your new wardrobe!</h1>
+        <p class="lead">With us you can refresh your style and keep up with hottest trends.</p>
+        <hr class="my-4">
+        <p>Check latest collections or your orders!</p>
+        <a class="btn btn-primary btn-dark" href="#" onclick="location.href='{% url 'register' %}'" name='register'
+            role="button">Products</a>
+        <a class="btn btn-primary btn-dark" href="#" onclick="location.href='{% url 'login' %}'" name='login'
+            role="button">Orders</a>
+    </div>
+
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/static/welcome_carousel/img1.jpg" class="d-block w-100">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

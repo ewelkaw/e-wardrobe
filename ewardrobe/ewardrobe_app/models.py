@@ -1,5 +1,4 @@
 from django.db import models
-from enum import Enum
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -15,17 +14,29 @@ class DateAddedMixin(models.Model):
 class Brand(models.Model):
     brand_name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.brand_name
+
 
 class Category(models.Model):
     category = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.category
 
 
 class Retailer(models.Model):
     retailer = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.retailer
+
 
 class Color(models.Model):
     color = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.color
 
 
 class Product(DateAddedMixin, models.Model):
@@ -41,7 +52,7 @@ class Product(DateAddedMixin, models.Model):
     color = models.ForeignKey(Color, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.name + "_" + self.brand
 
     class Meta:
         ordering = ["date_added", "name"]
@@ -52,11 +63,11 @@ class Basket(DateAddedMixin, models.Model):
     cost = models.DecimalField(max_digits=15, decimal_places=2)
     products = models.ManyToManyField(Product, through="ProductsAmount")
 
+    def __str__(self):
+        return self.user + self.products
+
     class Meta:
         ordering = ["user"]
-
-    def __str__(self):
-        return self.user
 
 
 class ProductsAmount(models.Model):
