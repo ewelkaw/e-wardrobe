@@ -1,7 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
 from django.views.generic import View
-from django.urls import reverse
 
 
 class WelcomeView(View):

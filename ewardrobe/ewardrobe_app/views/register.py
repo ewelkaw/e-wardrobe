@@ -1,9 +1,7 @@
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import View
 from ewardrobe_app.forms.register import RegisterForm
-from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 
@@ -21,11 +19,11 @@ class UserRegisterView(View):
             raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return HttpResponseRedirect(reverse(self.success_url))
+            return redirect(reverse(self.success_url))
         else:
-            print(form.errors)
+            form = self.form_class()
             return render(request, self.template_name, {"form": form})
 
     def get(self, request):
-        form = RegisterForm()
+        form = self.form_class()
         return render(request, self.template_name, {"form": form})
