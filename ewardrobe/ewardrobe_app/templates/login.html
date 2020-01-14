@@ -1,19 +1,46 @@
-{% block content %}
-<h2>Sign in</h2>
-<form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-    <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-        <p style="color: red">{{ error }}</p>
-        {% endfor %}
-    </p>
-    {% endfor %}
-    <button type="submit">Sign up</button>
-</form>
-{% endblock %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Login!</title>
+</head>
+
+<body>
+    <div class="jumbotron">
+        <h1 class="display-4">Login!</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    name="username">
+                <small id="emailHelp" class="form-text text-muted">{{ form.username.help_text }}</small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    name="password">
+                <small id="emailHelp" class="form-text text-muted">{{ form.password.help_text }}</small>
+            </div>
+            <input type="submit" class="btn btn-primary btn-dark">
+        </form>
+    </div>
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/static/welcome_carousel/img1.jpg" class="d-block w-100">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

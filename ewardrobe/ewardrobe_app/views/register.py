@@ -23,8 +23,9 @@ class UserRegisterView(View):
             login(request, user)
             return HttpResponseRedirect(reverse(self.success_url))
         else:
-            return HttpResponseRedirect(reverse(self.failure_url))
+            print(form.errors)
+            return render(request, self.template_name, {"form": form})
 
     def get(self, request):
-        form = UserCreationForm()
+        form = RegisterForm()
         return render(request, self.template_name, {"form": form})

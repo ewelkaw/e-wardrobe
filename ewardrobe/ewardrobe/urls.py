@@ -21,11 +21,13 @@ from ewardrobe_app.views.main import MainView
 from ewardrobe_app.views.welcome import WelcomeView
 from ewardrobe_app.views.register import UserRegisterView
 from ewardrobe_app.views.login import UserLoginView
+from ewardrobe_app.views.logout import UserLogoutView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", WelcomeView.as_view(), name="welcome"),
     path("register/", UserRegisterView.as_view(), name="register"),
     path("login/", UserLoginView.as_view(), name="login"),
+    path("logout/", UserLogoutView.as_view(), name="logout"),
     path("main/", login_required(MainView.as_view()), name="main"),
 ]

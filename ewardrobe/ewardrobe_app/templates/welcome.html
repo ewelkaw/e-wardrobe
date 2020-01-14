@@ -19,10 +19,8 @@
         <p class="lead">With us you can refresh your style and keep up with hottest trends.</p>
         <hr class="my-4">
         <p>Register or Login to have fun with fashion!</p>
-        <a class="btn btn-primary btn-dark" href="#" onclick="location.href='{% url 'register' %}'" name='register'
-            role="button">Register</a>
-        <a class="btn btn-primary btn-dark" href="#" onclick="location.href='{% url 'login' %}'" name='login'
-            role="button">Login</a>
+        <a class="btn btn-primary btn-dark" href="{% url 'register' %}" name='register' role="button">Register</a>
+        <a class="btn btn-primary btn-dark" href="{% url 'login' %}" name='login' role="button">Login</a>
     </div>
 
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
