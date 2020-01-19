@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from ewardrobe_app.views.main import MainView
 from ewardrobe_app.views.welcome import WelcomeView
@@ -23,7 +23,8 @@ from ewardrobe_app.views.login import UserLoginView
 from ewardrobe_app.views.logout import UserLogoutView
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
+    path("ewardrobe_admin/", admin.site.urls),
     path("", WelcomeView.as_view(), name="welcome"),
     path("register/", UserRegisterView.as_view(), name="register"),
     path("login/", UserLoginView.as_view(), name="login"),

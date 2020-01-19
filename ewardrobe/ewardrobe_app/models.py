@@ -17,12 +17,18 @@ class Brand(models.Model):
     def __str__(self):
         return self.brand_name
 
+    class Meta:
+        verbose_name_plural = "Brands"
+
 
 class Category(models.Model):
     category = models.CharField(max_length=100)
 
     def __str__(self):
         return self.category
+
+    class Meta:
+        verbose_name_plural = "Categories"
 
 
 class Retailer(models.Model):
@@ -31,12 +37,18 @@ class Retailer(models.Model):
     def __str__(self):
         return self.retailer
 
+    class Meta:
+        verbose_name_plural = "Retailers"
+
 
 class Color(models.Model):
     color = models.CharField(max_length=100)
 
     def __str__(self):
         return self.color
+
+    class Meta:
+        verbose_name_plural = "Colors"
 
 
 class Product(DateAddedMixin, models.Model):
@@ -56,6 +68,7 @@ class Product(DateAddedMixin, models.Model):
 
     class Meta:
         ordering = ["date_added", "name"]
+        verbose_name_plural = "Products"
 
 
 class Basket(DateAddedMixin, models.Model):
@@ -68,6 +81,7 @@ class Basket(DateAddedMixin, models.Model):
 
     class Meta:
         ordering = ["user"]
+        verbose_name_plural = "Baskets"
 
 
 class ProductsAmount(models.Model):
@@ -79,3 +93,6 @@ class ProductsAmount(models.Model):
 
     def __str__(self):
         return self.product
+
+    class Meta:
+        verbose_name_plural = "Products Amounts"

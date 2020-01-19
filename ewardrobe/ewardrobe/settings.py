@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "admin_honeypot",
     "ewardrobe_app",
     "processing_data",
 ]

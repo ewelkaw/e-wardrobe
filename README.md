@@ -26,3 +26,33 @@ python manage.py runscript load_data
 ```
 python manage.py test
 ```
+
+6. Running with admin panel
+```
+python manage.py createsuperuser
+python manage.py runserver
+go to: http://127.0.0.1:8000/admin/
+```
+
+7. Adding honeypot to django-admin
+    - `pip install django-admin-honeypot`
+    - add `"admin_honeypot"` to INSTALLED_APPS
+    - update urls:
+    ```
+    urlpatterns = patterns(''
+    ...
+    url(r'^admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    url(r'^secret/', admin.site.urls),
+    )
+    ```
+    - run python manage.py migrate
+
+
+
+* Getting admin docs
+    - `pip install docutils`
+    - add `"django.contrib.admindocs"` to INSTALLED_APPS
+    - add `path("admin/doc/", include("django.contrib.admindocs.urls"))` to urls.py
+    - run your app and go to: `/admin/doc/`
+
+![start image](images/admin_docs.png)
