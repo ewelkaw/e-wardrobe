@@ -55,4 +55,6 @@ go to: http://127.0.0.1:8000/admin/
     - add `path("admin/doc/", include("django.contrib.admindocs.urls"))` to urls.py
     - run your app and go to: `/admin/doc/`
 
+    
+
 ![start image](images/admin_docs.png)
