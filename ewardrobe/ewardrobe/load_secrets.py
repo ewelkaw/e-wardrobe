@@ -5,8 +5,11 @@ from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 
 BASEDIR = Path(__file__).absolute().parent
-with open(BASEDIR.joinpath("secrets.json")) as f:
-    secrets = json.loads(f.read())
+try:
+    with open(BASEDIR.joinpath("secrets.json")) as f:
+        secrets = json.loads(f.read())
+except FileNotFoundError:
+    secrets = {}
 
 
 def get_secret(setting, secrets=secrets):
