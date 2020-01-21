@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_fsm import FSMField, transition
 
 # Create your models here.
 
@@ -72,9 +73,45 @@ class Product(DateAddedMixin, models.Model):
 
 
 class Basket(DateAddedMixin, models.Model):
+    STATUS_OPENED = 0
+    STATUS_PAID = 1
+    STATUS_SHIPED = 2
+    STATUS_CLOSED = 3
+    STATUS_CANCELLED = 4
+    STATUS_RETURNED = 5
+    STATUS_CHOICES = (
+        (STATUS_OPENED, "opened"),
+        (STATUS_PAID, "paid"),
+        (STATUS_SHIPED, "shiped"),
+        (STATUS_CLOSED, "closed"),
+        (STATUS_CANCELLED, "cancelled"),
+        (STATUS_RETURNED, "returned"),
+    )
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     cost = models.DecimalField(max_digits=15, decimal_places=2)
+    paid = models.BooleanField(default=False)
     products = models.ManyToManyField(Product, through="ProductsAmount")
+    status = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_OPENED)
+
+    @transition(field=status, source=STATUS_OPENED, target=STATUS_PAID)
+    def pay(self):
+        self.paid = True
+        print("Pay amount {} for the order".format(self.cost))
+
+    @transition(field=status, source=STATUS_PAID, target=STATUS_SHIPED)
+    def fulfill(self):
+        print("Ship the order")
+
+    @transition(
+        field=status, source=[STATUS_OPENED, STATUS_SHIPED], target=STATUS_RETURNED
+    )
+    def cancel(self):
+        print("Cancel the order")
+
+    @transition(field=status, source=STATUS_SHIPED, target=STATUS_CLOSED)
+    def close(self):
+        print("Close the order")
 
     def __str__(self):
         return self.user + self.products

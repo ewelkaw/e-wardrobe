@@ -21,8 +21,9 @@ class UserRegisterView(View):
             login(request, user)
             return redirect(reverse(self.success_url))
         else:
+            errors = form.errors
             form = self.form_class()
-            return render(request, self.template_name, {"form": form})
+            return render(request, self.template_name, {"form": form, "errors": errors})
 
     def get(self, request):
         form = self.form_class()
