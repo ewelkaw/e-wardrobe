@@ -34,7 +34,7 @@ python manage.py runserver
 go to: http://127.0.0.1:8000/admin/
 ```
 
-7. Adding honeypot to django-admin
+--- Adding honeypot to django-admin ---
     - `pip install django-admin-honeypot`
     - add `"admin_honeypot"` to INSTALLED_APPS
     - update urls:
@@ -48,13 +48,15 @@ go to: http://127.0.0.1:8000/admin/
     - run python manage.py migrate
 
 
-
-* Getting admin docs
+--- Getting admin docs ---
     - `pip install docutils`
     - add `"django.contrib.admindocs"` to INSTALLED_APPS
     - add `path("admin/doc/", include("django.contrib.admindocs.urls"))` to urls.py
     - run your app and go to: `/admin/doc/`
 
-    
-
 ![start image](images/admin_docs.png)
+
+--- Finite state machine in django ---
+https://medium.com/@distillerytech/building-for-flexibility-using-finite-state-machines-in-django-2e36ddbd7708
+
+`pip install django-fsm`
