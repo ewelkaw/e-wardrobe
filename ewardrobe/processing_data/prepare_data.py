@@ -26,12 +26,10 @@ class DataLoader:
     @staticmethod
     def load_data_to_db(data: pandas.DataFrame):
         for index, row in data.iterrows():
-            brand, _ = Brand.objects.get_or_create(brand_name=row["brand_name"])
-            category, _ = Category.objects.get_or_create(
-                category=row["product_category"]
-            )
-            retailer, _ = Retailer.objects.get_or_create(retailer=row["retailer"])
-            color, _ = Color.objects.get_or_create(color=row["color"])
+            brand, _ = Brand.objects.get_or_create(name=row["brand_name"])
+            category, _ = Category.objects.get_or_create(name=row["product_category"])
+            retailer, _ = Retailer.objects.get_or_create(name=row["retailer"])
+            color, _ = Color.objects.get_or_create(name=row["color"])
             Product.objects.create(
                 name=row["product_name"],
                 price=row["price"].split("-")[0],

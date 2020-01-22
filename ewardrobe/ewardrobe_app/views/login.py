@@ -20,7 +20,11 @@ class UserLoginView(View):
             return redirect(reverse(self.success_url))
         else:
             form = self.form_class()
-            return render(request, self.template_name, {"form": form})
+            return render(
+                request,
+                self.template_name,
+                {"form": form, "errors": "There is something wrong, please try again!"},
+            )
 
     def get(self, request):
         form = self.form_class()
