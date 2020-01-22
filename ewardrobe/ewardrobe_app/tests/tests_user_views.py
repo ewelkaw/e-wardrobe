@@ -1,5 +1,4 @@
 from django.test import TestCase
-import pytest
 from django.test import Client
 from django.contrib.auth.models import User
 
@@ -11,6 +10,9 @@ class UserTestCase(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.client = Client()
+        cls.user = User.objects.create_user(
+            username="john", email="lennon@thebeatles.com", password="johnpassword"
+        )
 
     def test_welcome_view(self):
         result = self.client.get("/")
@@ -36,7 +38,7 @@ class UserTestCase(TestCase):
         result = self.client.post(
             "/register/",
             {
-                "username": "john",
+                "username": "john2",
                 "password1": "smith123password",
                 "password2": "smith123password",
             },
@@ -50,7 +52,6 @@ class UserTestCase(TestCase):
         assert result.status_code == 200
 
     def test_login_post_view_success(self):
-        User.objects.create_user("john", "lennon@thebeatles.com", "johnpassword")
         result = self.client.post(
             "/login/", {"username": "john", "password": "johnpassword"},
         )
@@ -58,7 +59,6 @@ class UserTestCase(TestCase):
         assert result.url == "/main/"
 
     def test_login_post_view_failure(self):
-        User.objects.create_user("john", "lennon@thebeatles.com", "johnpassword")
         result = self.client.post(
             "/login/", {"username": "johnny", "password": "johnpassword"},
         )

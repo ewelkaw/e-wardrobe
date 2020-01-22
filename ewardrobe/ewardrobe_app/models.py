@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django_fsm import FSMField, transition
+from django.db import transaction
+from django_fsm import transition, FSMIntegerField
 
 # Create your models here.
 
@@ -13,7 +14,7 @@ class DateAddedMixin(models.Model):
 
 
 class Brand(models.Model):
-    brand_name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.brand_name
@@ -23,7 +24,7 @@ class Brand(models.Model):
 
 
 class Category(models.Model):
-    category = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.category
@@ -33,7 +34,7 @@ class Category(models.Model):
 
 
 class Retailer(models.Model):
-    retailer = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.retailer
@@ -43,7 +44,7 @@ class Retailer(models.Model):
 
 
 class Color(models.Model):
-    color = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.color
@@ -65,7 +66,7 @@ class Product(DateAddedMixin, models.Model):
     color = models.ForeignKey(Color, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name + "_" + self.brand
+        return self.name
 
     class Meta:
         ordering = ["date_added", "name"]
@@ -75,46 +76,52 @@ class Product(DateAddedMixin, models.Model):
 class Basket(DateAddedMixin, models.Model):
     STATUS_OPENED = 0
     STATUS_PAID = 1
-    STATUS_SHIPED = 2
+    STATUS_SHIPPED = 2
     STATUS_CLOSED = 3
     STATUS_CANCELLED = 4
     STATUS_RETURNED = 5
     STATUS_CHOICES = (
         (STATUS_OPENED, "opened"),
         (STATUS_PAID, "paid"),
-        (STATUS_SHIPED, "shiped"),
+        (STATUS_SHIPPED, "shipped"),
         (STATUS_CLOSED, "closed"),
         (STATUS_CANCELLED, "cancelled"),
         (STATUS_RETURNED, "returned"),
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    cost = models.DecimalField(max_digits=15, decimal_places=2)
     paid = models.BooleanField(default=False)
     products = models.ManyToManyField(Product, through="ProductsAmount")
-    status = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_OPENED)
+    status = FSMIntegerField(
+        choices=STATUS_CHOICES, default=STATUS_OPENED, protected=True
+    )
 
     @transition(field=status, source=STATUS_OPENED, target=STATUS_PAID)
     def pay(self):
         self.paid = True
-        print("Pay amount {} for the order".format(self.cost))
+        print("Pay for the order")
 
-    @transition(field=status, source=STATUS_PAID, target=STATUS_SHIPED)
-    def fulfill(self):
-        print("Ship the order")
-
-    @transition(
-        field=status, source=[STATUS_OPENED, STATUS_SHIPED], target=STATUS_RETURNED
-    )
+    @transition(field=status, source=STATUS_OPENED, target=STATUS_CANCELLED)
     def cancel(self):
         print("Cancel the order")
 
-    @transition(field=status, source=STATUS_SHIPED, target=STATUS_CLOSED)
+    @transition(field=status, source=STATUS_PAID, target=STATUS_SHIPPED)
+    def ship(self):
+        print("Ship the order")
+
+    @transition(field=status, source=STATUS_SHIPPED, target=STATUS_RETURNED)
+    def give_back(self):
+        print("Return the order")
+
+    @transition(field=status, source=STATUS_SHIPPED, target=STATUS_CLOSED)
     def close(self):
         print("Close the order")
 
-    def __str__(self):
-        return self.user + self.products
+    @transaction.atomic
+    def add_product(self, product):
+        line_item, _ = self.productsamount_set.get_or_create(product=product)
+        line_item.amount += 1
+        line_item.save()
 
     class Meta:
         ordering = ["user"]
@@ -123,13 +130,14 @@ class Basket(DateAddedMixin, models.Model):
 
 class ProductsAmount(models.Model):
     product = models.ForeignKey(
-        Product, on_delete=models.SET_NULL, null=True, blank=True
+        Product, on_delete=models.SET_NULL, null=True, blank=True,
     )
     basket = models.ForeignKey(Basket, on_delete=models.SET_NULL, null=True)
-    amount = models.IntegerField()
+    amount = models.IntegerField(default=0)
 
-    def __str__(self):
-        return self.product
+    @property
+    def cost(self):
+        return self.amount * self.product.price
 
     class Meta:
         verbose_name_plural = "Products Amounts"
