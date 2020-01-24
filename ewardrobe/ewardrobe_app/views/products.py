@@ -10,14 +10,13 @@ class ProductsView(View):
     failure_url = "main"
     paginate_by = 20
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             products = Product.objects.all()
             paginator = Paginator(
                 products, self.paginate_by
             )  # Show 20 products per page.
-
-            page_number = request.GET.get("page")
+            page_number = request.GET.get("page") if request.GET.get("page") else 1
             page_obj = paginator.get_page(page_number)
             return render(request, self.template_name, {"page_obj": page_obj})
         else:

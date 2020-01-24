@@ -34,6 +34,7 @@ urlpatterns = [
     path("login/", UserLoginView.as_view(), name="login"),
     path("logout/", UserLogoutView.as_view(), name="logout"),
     path("main/", MainView.as_view(), name="main"),
+    path("products/", ProductsView.as_view(), name="products"),
     re_path(
         "products\/(?:page=(?P<page_number>\d+))?$",
         ProductsView.as_view(),
