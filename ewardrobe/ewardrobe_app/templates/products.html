@@ -15,12 +15,17 @@
             <li class="nav-item right" style="float: right;">
                 <a class="navbar-brand" href="{% url 'logout' %}">Logout</a>
             </li>
+            <form class="form-inline" method="get">
+                <input class="form-control mr-sm-3" name="q" type="search" placeholder="Search by name"
+                    aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
         </ul>
     </div>
 </nav>
 
 <table class="table table-hover table-light">
-    <thead class="bg-warning">
+    <thead class="bg-warning mr-3">
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Price</th>
@@ -32,7 +37,7 @@
     </thead>
     <tbody>
         {% for product in page_obj %}
-        <tr>
+        <tr class="ml-3">
             <td>{{ product.name }}</td>
             <td>{{ product.price }}$ </td>
             <td>{{ product.brand }}</td>
