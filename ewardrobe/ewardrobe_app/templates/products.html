@@ -1,84 +1,72 @@
-<!doctype html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %}This are our products!{% endblock %}
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <nav class="navbar sticky-top navbar-dark bg-dark">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            data-placement="right" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
-            name='orders'>
-            <a class="navbar-brand" href="{% url 'orders' %}">Orders</a>
-        </button>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            data-placement="right" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
-            name='logout'>
-            <a class="navbar-brand" href="{% url 'logout' %}">Logout</a>
-        </button>
-        <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </nav>
-    <title>This are our products!</title>
-</head>
-
-<body>
-    <table class="table table-hover table-light">
-        <thead class="bg-warning">
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Brand</th>
-                <th scope="col">Category</th>
-                <th scope="col">Color</th>
-                <th scope="col">Details</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in page_obj %}
-            <tr>
-                <td>{{ product.name }}</td>
-                <td>{{ product.price }}$ </td>
-                <td>{{ product.brand }}</td>
-                <td>{{ product.category }}</td>
-                <td>@{{ product.color }}</td>
-                <td>
-                    <a class="btn btn-primary btn-dark" href="{% url 'product' product.id %}" name='product'
-                        role="button">
-                        Details
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            {% if page_obj.has_previous %}
-            <li class="page-item">
-                <a class="page-link text-white bg-dark" href="?page={{page_obj.previous_page_number}}"
-                    tabindex="-1">Previous</a>
+{% block main %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark flex-md-nowrap">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="navbar-brand" href="{% url 'orders' %}">Orders</a>
             </li>
-            {% endif %}
-            <li class=" page-item"><a class="page-link text-white bg-dark"
-                    href="?page={{page_obj.number}}">{{page_obj.number}} of {{ page_obj.paginator.num_pages }}</a>
+            <li class="nav-item right" style="float: right;">
+                <a class="navbar-brand" href="{% url 'logout' %}">Logout</a>
             </li>
-            {% if page_obj.has_next %}
-            <li class=" page-item">
-                <a class="page-link text-white bg-dark" aria-disabled="true"
-                    href="?page={{page_obj.next_page_number}}">Next</a>
-            </li>
-            {% endif %}
         </ul>
-    </nav>
-</body>
+    </div>
+</nav>
+
+<table class="table table-hover table-light">
+    <thead class="bg-warning">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Brand</th>
+            <th scope="col">Category</th>
+            <th scope="col">Color</th>
+            <th scope="col">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in page_obj %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}$ </td>
+            <td>{{ product.brand }}</td>
+            <td>{{ product.category }}</td>
+            <td>@{{ product.color }}</td>
+            <td>
+                <a class="btn btn-primary btn-dark" href="{% url 'product' product.id %}" name='product' role="button">
+                    Details
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link text-white bg-dark" href="?page={{page_obj.previous_page_number}}"
+                tabindex="-1">Previous</a>
+        </li>
+        {% endif %}
+        <li class=" page-item"><a class="page-link text-white bg-dark"
+                href="?page={{page_obj.number}}">{{page_obj.number}} of {{ page_obj.paginator.num_pages }}</a>
+        </li>
+        {% if page_obj.has_next %}
+        <li class=" page-item">
+            <a class="page-link text-white bg-dark" aria-disabled="true"
+                href="?page={{page_obj.next_page_number}}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock %}
 
 </html>
