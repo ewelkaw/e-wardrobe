@@ -1,32 +1,30 @@
 {% extends "base.html" %}
-<title>{% block title %}Login!{% endblock %}</title>
+{% block title %}Login!{% endblock %}
 
 
-<body>
-    <div class="jumbotron">
-        {% block main %}
-        <h1 class="display-4 ml-3 mt-3">Login!</h1>
+{% block main %}
+<div class="jumbotron">
+    <h1 class="display-4 ml-3 mt-3">Login!</h1>
 
-        {{ errors }}
+    {{ errors }}
 
-        <form class="ml-3" method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                    name="username">
-                <small id="emailHelp" class="form-text text-muted">{{ form.username.help_text }}</small>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                    name="password">
-                <small id="emailHelp" class="form-text text-muted">{{ form.password.help_text }}</small>
-            </div>
-            <input type="submit" class="btn btn-primary btn-dark">
-        </form>
-        {% endblock %}
-    </div>
-</body>
+    <form class="ml-3" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                name="username">
+            <small id="emailHelp" class="form-text text-muted">{{ form.username.help_text }}</small>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                name="password">
+            <small id="emailHelp" class="form-text text-muted">{{ form.password.help_text }}</small>
+        </div>
+        <input type="submit" class="btn btn-primary btn-dark">
+    </form>
+</div>
+{% endblock %}
 
 </html>

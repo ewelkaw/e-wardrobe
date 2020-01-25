@@ -1,61 +1,59 @@
 {% extends "base.html" %}
-<title>{% block title %}Have a look at our products!{% endblock %}</title>
+{% block title %}Have a look at our products!{% endblock %}
 
-<body>
-    {% block main %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark flex-md-nowrap">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="navbar-brand" href="{% url 'orders' %}">Orders</a>
-                </li>
-                <li class="nav-item">
-                    <a class="navbar-brand" href="{% url 'products' %}">Products</a>
-                </li>
-                <li class="nav-item right" style="float: right;">
-                    <a class="navbar-brand" href="{% url 'logout' %}">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="media bg-light">
-        <div class="media-body ml-3 mr-3 mt-1 bg-light">
-            <h1 class="display-4 mt-1">{{ product.name }}</h1>
-            <p class="lead">{{ product.description }}</p>
-            <hr class="my-4">
-            <p><strong>Price:</strong> {{ product.price }}</p>
-            <p><strong>Brand:</strong> {{ product.brand }}</p>
-            <p><strong>Color:</strong> {{ product.color }}</p>
-            <p><strong>Rating:</strong> {{ product.rating }} out of {{ product.review_count }} reviews</p>
-
-            <form method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="size">Size</label>
-                    <select class="form-control" id="size">
-                        <option>XS</option>
-                        <option>S</option>
-                        <option>M</option>
-                        <option>L</option>
-                        <option>XL</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="amount">Amount</label>
-                    <input class="form-control" type="number" min="0" step="1" data-bind="value:replyNumber" id="amount"
-                        name="amount">
-                </div>
-                <input type="submit" class="btn btn-primary btn-dark mb-3">
-            </form>
-        </div>
-        <img src="http://placekitten.com/500/500" class="mr-3 mt-3">
+{% block main %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark flex-md-nowrap">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="navbar-brand" href="{% url 'orders' %}">Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="navbar-brand" href="{% url 'products' %}">Products</a>
+            </li>
+            <li class="nav-item right" style="float: right;">
+                <a class="navbar-brand" href="{% url 'logout' %}">Logout</a>
+            </li>
+        </ul>
     </div>
-    {% endblock %}
-</body>
+</nav>
+
+<div class="media bg-light">
+    <div class="media-body ml-3 mr-3 mt-1 bg-light">
+        <h1 class="display-4 mt-1">{{ product.name }}</h1>
+        <p class="lead">{{ product.description }}</p>
+        <hr class="my-4">
+        <p><strong>Price:</strong> {{ product.price }}</p>
+        <p><strong>Brand:</strong> {{ product.brand }}</p>
+        <p><strong>Color:</strong> {{ product.color }}</p>
+        <p><strong>Rating:</strong> {{ product.rating }} out of {{ product.review_count }} reviews</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="size">Size</label>
+                <select class="form-control" id="size">
+                    <option>XS</option>
+                    <option>S</option>
+                    <option>M</option>
+                    <option>L</option>
+                    <option>XL</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input class="form-control" type="number" min="0" step="1" data-bind="value:replyNumber" id="amount"
+                    name="amount">
+            </div>
+            <input type="submit" class="btn btn-primary btn-dark mb-3">
+        </form>
+    </div>
+    <img src="http://placekitten.com/500/500" class="mr-3 mt-3">
+</div>
+{% endblock %}
 
 </html>
