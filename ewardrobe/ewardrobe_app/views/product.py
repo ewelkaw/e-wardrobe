@@ -10,8 +10,7 @@ class ProductView(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            id = kwargs["id"]
-            product = Product.objects.filter(id=id).first()
+            product = Product.objects.get(id=kwargs["id"])
             return render(request, self.template_name, {"product": product})
         else:
             return redirect(reverse(self.failure_url))

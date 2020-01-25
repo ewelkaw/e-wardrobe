@@ -50,7 +50,8 @@
                 <td>{{ product.category }}</td>
                 <td>@{{ product.color }}</td>
                 <td>
-                    <a class="btn btn-primary btn-dark" href="/products/{{product.id}}" name='product' role="button">
+                    <a class="btn btn-primary btn-dark" href="{% url 'product' product.id %}" name='product'
+                        role="button">
                         Details
                     </a>
                 </td>
