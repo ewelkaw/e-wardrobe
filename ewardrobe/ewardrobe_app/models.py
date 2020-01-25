@@ -17,7 +17,7 @@ class Brand(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.brand_name
+        return self.name
 
     class Meta:
         verbose_name_plural = "Brands"
@@ -27,7 +27,7 @@ class Category(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.category
+        return self.name
 
     class Meta:
         verbose_name_plural = "Categories"
@@ -37,7 +37,7 @@ class Retailer(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.retailer
+        return self.name
 
     class Meta:
         verbose_name_plural = "Retailers"
@@ -47,7 +47,7 @@ class Color(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.color
+        return self.name
 
     class Meta:
         verbose_name_plural = "Colors"
