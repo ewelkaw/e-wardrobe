@@ -26,9 +26,17 @@
 </head>
 
 <body>
-    {% block body %}
-
+    {% block main %}
     {% endblock %}
+    <div id="carouselExampleSlidesOnly" class="carousel slide mt-3" data-ride="carousel">
+        {% block carousel %}
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/static/welcome_carousel/img1.jpg" class="d-block w-100">
+            </div>
+        </div>
+        {% endblock %}
+    </div>
 </body>
 
 </html>

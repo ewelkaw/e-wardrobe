@@ -2,24 +2,16 @@
 <title>{% block title %}Welcome!{% endblock %}</title>
 
 <body>
-    {% block body %}
     <div class="jumbotron">
-        <h1 class="display-4">Welcome to your new wardrobe!</h1>
-        <p class="lead">With us you can refresh your style and keep up with hottest trends.</p>
-        <hr class="my-4">
-        <p>Register or Login to have fun with fashion!</p>
-        <a class="btn btn-primary btn-dark" href="{% url 'register' %}" name='register' role="button">Register</a>
-        <a class="btn btn-primary btn-dark" href="{% url 'login' %}" name='login' role="button">Login</a>
+        {% block main %}
+        <h1 class="display-4 ml-3 mt-3">Welcome to your new wardrobe!</h1>
+        <p class="lead ml-3">With us you can refresh your style and keep up with hottest trends.</p>
+        <hr class="my-4 ml-3">
+        <p class="ml-3">Register or Login to have fun with fashion!</p>
+        <a class="btn btn-primary btn-dark ml-3" href="{% url 'register' %}" name='register' role="button">Register</a>
+        <a class="btn btn-primary btn-dark ml-3" href="{% url 'login' %}" name='login' role="button">Login</a>
+        {% endblock %}
     </div>
-
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="/static/welcome_carousel/img1.jpg" class="d-block w-100">
-            </div>
-        </div>
-    </div>
-    {% endblock %}
 </body>
 
 </html>
