@@ -15,12 +15,17 @@
             <li class="nav-item right" style="float: right;">
                 <a class="navbar-brand" href="{% url 'logout' %}">Logout</a>
             </li>
+            <form class="form-inline" action="/products/?q='q'" method="get">
+                <input class="form-control mr-sm-3" name="q" type="search" placeholder="Search by name"
+                    aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
         </ul>
     </div>
 </nav>
 
 <table class="table table-hover table-light">
-    <thead class="bg-warning">
+    <thead class="bg-warning mr-3">
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Price</th>
@@ -32,7 +37,7 @@
     </thead>
     <tbody>
         {% for product in page_obj %}
-        <tr>
+        <tr class="ml-3">
             <td>{{ product.name }}</td>
             <td>{{ product.price }}$ </td>
             <td>{{ product.brand }}</td>
@@ -52,17 +57,15 @@
     <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
         <li class="page-item">
-            <a class="page-link text-white bg-dark" href="?page={{page_obj.previous_page_number}}"
-                tabindex="-1">Previous</a>
+            <a class="page-link text-white bg-dark" href='{{ links.previous }}' tabindex="-1">Previous</a>
         </li>
         {% endif %}
-        <li class=" page-item"><a class="page-link text-white bg-dark"
-                href="?page={{page_obj.number}}">{{page_obj.number}} of {{ page_obj.paginator.num_pages }}</a>
+        <li class=" page-item"><span class="page-link text-white bg-dark">{{page_obj.number}} of
+                {{ page_obj.paginator.num_pages }}</span>
         </li>
         {% if page_obj.has_next %}
         <li class=" page-item">
-            <a class="page-link text-white bg-dark" aria-disabled="true"
-                href="?page={{page_obj.next_page_number}}">Next</a>
+            <a class="page-link text-white bg-dark" aria-disabled="true" href='{{ links.next }}'>Next</a>
         </li>
         {% endif %}
     </ul>
