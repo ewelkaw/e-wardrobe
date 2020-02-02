@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "admin_honeypot",
     "ewardrobe_app",
     "processing_data",
+    "creating_data",
 ]
 
 MIDDLEWARE = [
