@@ -27,17 +27,17 @@
 <table class="table table-hover table-light">
     <thead class="bg-warning mr-3">
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Brand</th>
-            <th scope="col">Category</th>
-            <th scope="col">Color</th>
-            <th scope="col">Details</th>
+            <th class="col">Name</th>
+            <th class="col">Price</th>
+            <th class="col">Brand</th>
+            <th class="col">Category</th>
+            <th class="col">Color</th>
+            <th class="col">Details</th>
         </tr>
     </thead>
     <tbody>
         {% for product in page_obj %}
-        <tr class="ml-3">
+        <tr class="ml-3 mr-3">
             <td>{{ product.name }}</td>
             <td>{{ product.price }}$ </td>
             <td>{{ product.brand }}</td>
