@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}This is your current order!{% endblock %}
+{% block title %}This is your current basket!{% endblock %}
 
 {% block main %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark flex-md-nowrap">
@@ -22,7 +22,7 @@
     </div>
 </nav>
 
-<p class="h3 my-4 ml-3">You added successfully {{ product.name }} to your order!</p>
+<p class="h3 my-4 ml-3">You added successfully {{ product.name }} to your basket!</p>
 <hr class="my-4 ml-3">
 <p class="lead ml-3"><strong>This is your current basket:</strong></p>
 
@@ -33,8 +33,6 @@
             <th class="col">Size</th>
             <th class="col">Amount</th>
             <th class="col">Cost</th>
-            <th class="col">Change</th>
-            <th class="col">Delete</th>
         </tr>
     </thead>
     <tbody class="ml-3">

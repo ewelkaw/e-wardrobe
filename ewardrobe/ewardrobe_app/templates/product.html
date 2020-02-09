@@ -32,7 +32,7 @@
         <p><strong>Color:</strong> {{ product.color }}</p>
         <p><strong>Rating:</strong> {{ product.rating }} out of {{ product.review_count }} reviews</p>
 
-        <form action="/order/" method="post">
+        <form action="/basket/" method="post">
             {% csrf_token %}
             <input type="hidden" name="product_id" value="{{ product.id }}">
             <div class="form-group">
@@ -50,7 +50,7 @@
                 <input class="form-control" default="1" value="1" type="number" min="0" step="1"
                     data-bind="value:replyNumber" id="amount" name="amount">
             </div>
-            <input id="order" name="order" type="submit" class="btn btn-primary btn-dark mb-3">
+            <input id="basket" name="basket" type="submit" class="btn btn-primary btn-dark mb-3">
         </form>
     </div>
     <img src="{{ product.url }}" class="mr-3 mt-3">

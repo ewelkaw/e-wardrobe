@@ -26,7 +26,6 @@ from ewardrobe_app.views.products import ProductsView
 from ewardrobe_app.views.order import OrderView
 from ewardrobe_app.views.orders import OrdersView
 
-# from ewardrobe_app.views.change_order import ChangeOrderView
 
 urlpatterns = [
     path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
@@ -38,7 +37,6 @@ urlpatterns = [
     path("main/", MainView.as_view(), name="main"),
     path("products/<int:id>", ProductView.as_view(), name="product"),
     path("products/", ProductsView.as_view(), name="products"),
-    path("order/", OrderView.as_view(), name="order"),
-    # path("change_order/", ChangeOrderView.as_view(), name="change_order"),
+    path("basket/", OrderView.as_view(), name="basket"),
     path("orders/", OrdersView.as_view(), name="orders"),
 ]
