@@ -41,21 +41,9 @@
         {% for products_amount in products_amounts %}
         <tr>
             <td>{{ products_amount.product.name }}</td>
-            <td>{{ products_amount.size }}$ </td>
+            <td>{{ products_amount.size }} </td>
             <td>{{ products_amount.amount }}</td>
             <td>{{ products_amount.cost }}$</td>
-            <!-- <td>
-                <a class="btn btn-primary btn-dark" href="{% url 'change_order' products_amount %}" name='change_order'
-                    role="button">
-                    Change
-                </a>
-            </td>
-            <td>
-                <a class="btn btn-primary btn-dark" href="{% url 'delete_product' products_amount %}"
-                    name='delete_product' role="button">
-                    Delete
-                </a>
-            </td> -->
         </tr>
         {% endfor %}
         <tr>
