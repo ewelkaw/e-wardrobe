@@ -37,7 +37,7 @@ class ProductFactory(factory.django.DjangoModelFactory):
 
     name = factory.Sequence(lambda n: "test_product_%s" % n)
     price = factory.Sequence(lambda n: n)
-    url = factory.LazyAttribute(lambda o: "%s@example.org" % o.name)
+    url = factory.LazyAttribute(lambda o: "%s@example.com" % o.name)
     description = factory.Sequence(lambda n: "test_product_description_%s" % n)
     rating = factory.Sequence(lambda n: n)
     review_count = factory.Sequence(lambda n: n)
@@ -45,4 +45,3 @@ class ProductFactory(factory.django.DjangoModelFactory):
     product_category = factory.SubFactory(CategoryFactory)
     retailer = factory.SubFactory(RetailerFactory)
     color = factory.SubFactory(ColorFactory)
-
