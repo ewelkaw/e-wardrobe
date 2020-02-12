@@ -32,11 +32,12 @@
         <p><strong>Color:</strong> {{ product.color }}</p>
         <p><strong>Rating:</strong> {{ product.rating }} out of {{ product.review_count }} reviews</p>
 
-        <form method="post">
+        <form action="/basket/" method="post">
             {% csrf_token %}
+            <input type="hidden" name="product_id" value="{{ product.id }}">
             <div class="form-group">
                 <label for="size">Size</label>
-                <select class="form-control" id="size">
+                <select class="form-control" name="size" id="size">
                     <option>XS</option>
                     <option>S</option>
                     <option>M</option>
@@ -46,10 +47,10 @@
             </div>
             <div class="form-group">
                 <label for="amount">Amount</label>
-                <input class="form-control" type="number" min="0" step="1" data-bind="value:replyNumber" id="amount"
-                    name="amount">
+                <input class="form-control" default="1" value="1" type="number" min="0" step="1"
+                    data-bind="value:replyNumber" id="amount" name="amount">
             </div>
-            <input type="submit" class="btn btn-primary btn-dark mb-3">
+            <input id="basket" name="basket" type="submit" class="btn btn-primary btn-dark mb-3">
         </form>
     </div>
     <img src="{{ product.url }}" class="mr-3 mt-3">

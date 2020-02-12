@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}This is your current basket!{% endblock %}
+
+{% block main %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark flex-md-nowrap">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="navbar-brand" href="{% url 'orders' %}">Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="navbar-brand" href="{% url 'products' %}">Products</a>
+            </li>
+            <li class="nav-item right" style="float: right;">
+                <a class="navbar-brand" href="{% url 'logout' %}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<p class="h3 my-4 ml-3">You added successfully {{ product.name }} to your basket!</p>
+<hr class="my-4 ml-3">
+<p class="lead ml-3"><strong>This is your current basket:</strong></p>
+
+<table class="table table-hover table-light">
+    <thead class="bg-warning">
+        <tr>
+            <th class="col">Name</th>
+            <th class="col">Size</th>
+            <th class="col">Amount</th>
+            <th class="col">Cost</th>
+        </tr>
+    </thead>
+    <tbody class="ml-3">
+        {% for products_amount in products_amounts %}
+        <tr>
+            <td>{{ products_amount.product.name }}</td>
+            <td>{{ products_amount.size }} </td>
+            <td>{{ products_amount.amount }}</td>
+            <td>{{ products_amount.cost }}$</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ total_cost }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+
+</html>

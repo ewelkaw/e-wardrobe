@@ -21,7 +21,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = "hf)^_ezf_6u*^96$_anoz3zk4@w&n3r4(7eeph55*a8=tyqfp#"
 SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -76,20 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "ewardrobe.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'ewardrobe_db',
-#         'USER': 'user',
-#         'PASSWORD': 'secret_password',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
 DATABASES = get_secret("DATABASES")
 
 # Password validation

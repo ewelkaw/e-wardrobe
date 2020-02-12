@@ -21,9 +21,10 @@ from ewardrobe_app.views.welcome import WelcomeView
 from ewardrobe_app.views.register import UserRegisterView
 from ewardrobe_app.views.login import UserLoginView
 from ewardrobe_app.views.logout import UserLogoutView
-from ewardrobe_app.views.products import ProductsView
-from ewardrobe_app.views.orders import OrdersView
 from ewardrobe_app.views.product import ProductView
+from ewardrobe_app.views.products import ProductsView
+from ewardrobe_app.views.order import OrderView
+from ewardrobe_app.views.orders import OrdersView
 
 
 urlpatterns = [
@@ -36,5 +37,6 @@ urlpatterns = [
     path("main/", MainView.as_view(), name="main"),
     path("products/<int:id>", ProductView.as_view(), name="product"),
     path("products/", ProductsView.as_view(), name="products"),
+    path("basket/", OrderView.as_view(), name="basket"),
     path("orders/", OrdersView.as_view(), name="orders"),
 ]

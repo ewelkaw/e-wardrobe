@@ -129,10 +129,21 @@ class Basket(DateAddedMixin, models.Model):
 
 
 class ProductsAmount(models.Model):
+    STATUS_CHOICES = (
+        ("XS", "XS"),
+        ("S", "S"),
+        ("M", "M"),
+        ("L", "L"),
+        ("XL", "XL"),
+    )
+
     product = models.ForeignKey(
         Product, on_delete=models.SET_NULL, null=True, blank=True,
     )
     basket = models.ForeignKey(Basket, on_delete=models.SET_NULL, null=True)
+    size = models.CharField(
+        max_length=2, choices=STATUS_CHOICES, blank=False, null=False, default="S"
+    )
     amount = models.IntegerField(default=0)
 
     @property
