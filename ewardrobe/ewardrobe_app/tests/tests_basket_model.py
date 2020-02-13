@@ -12,10 +12,8 @@ from ewardrobe_app.models import (
     Color,
 )
 
-# Create your tests here.
 
-
-class UserTestCase(TestCase):
+class BasketTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -59,9 +57,6 @@ class UserTestCase(TestCase):
 
     def test_basket_open_close_flow(self):
         basket = Basket.objects.create(user=self.user)
-        # import ipdb
-
-        # ipdb.set_trace()
         assert basket.status == 0
 
         basket.pay()

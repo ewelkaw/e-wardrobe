@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # Create your tests here.
 
 
-class UserTestCase(TestCase):
+class UserViewsTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

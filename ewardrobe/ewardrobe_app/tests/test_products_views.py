@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .factories import ProductFactory
 
 
-class ProductsTestCase(TestCase):
+class ProductsViewTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
