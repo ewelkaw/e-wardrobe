@@ -14,7 +14,6 @@ class OrderWorkflow:
     def add_product_to_basket(self) -> dict:
         product = Product.objects.get(id=self.__product_id)
         basket, _ = Basket.objects.get_or_create(status=0, user=self.__user)
-        basket.save()
 
         product_amount, _ = ProductsAmount.objects.get_or_create(
             basket=basket, product=product, size=self.__size
@@ -23,6 +22,9 @@ class OrderWorkflow:
         product_amount.save()
 
         products_amounts = ProductsAmount.objects.filter(basket=basket).all()
+
+        # in case of performace it can be an issue,
+        # but we assume there will be a reasonable amount of products in a single basket
         total_cost = sum(products_amount.cost for products_amount in products_amounts)
         return {
             "basket": basket,

@@ -1,44 +1,16 @@
 from django.test import TestCase
 import pytest
-from django.contrib.auth.models import User
+from ewardrobe_app.tests.factories import ProductFactory, UserFactory
 from django_fsm import TransitionNotAllowed
-from ewardrobe_app.models import (
-    Product,
-    Basket,
-    ProductsAmount,
-    Brand,
-    Category,
-    Retailer,
-    Color,
-)
+from ewardrobe_app.models import Basket, ProductsAmount
 
 
 class BasketTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.user = User.objects.create_user(
-            username="john", email="lennon@thebeatles.com", password="johnpassword"
-        )
-        cls.user1 = User.objects.create_user(
-            username="john2", email="lennon@thebeatles.com", password="johnpassword"
-        )
-        cls.brand = Brand.objects.create(name="brand")
-        cls.category = Category.objects.create(name="category")
-        cls.retailer = Retailer.objects.create(name="retailer")
-        cls.color = Color.objects.create(name="color")
-        cls.product = Product.objects.create(
-            name="t-shirt",
-            price=20.00,
-            url="https://my_shirt.com",
-            description="t-shirt description",
-            rating=4.5,
-            review_count=13,
-            brand=cls.brand,
-            product_category=cls.category,
-            retailer=cls.retailer,
-            color=cls.color,
-        )
+        cls.user = UserFactory()
+        cls.product = ProductFactory()
 
     def test_new_basket(self):
         basket = Basket.objects.create(user=self.user)
@@ -47,13 +19,13 @@ class BasketTestCase(TestCase):
         assert ProductsAmount.objects.count() == 1
         assert ProductsAmount.objects.first().product == self.product
         assert ProductsAmount.objects.first().amount == 1
-        assert ProductsAmount.objects.first().cost == 20.00
+        assert ProductsAmount.objects.first().cost == self.product.price
 
         basket.add_product(self.product)
 
         assert ProductsAmount.objects.count() == 1
         assert ProductsAmount.objects.first().amount == 2
-        assert ProductsAmount.objects.first().cost == 40.00
+        assert ProductsAmount.objects.first().cost == 2 * self.product.price
 
     def test_basket_open_close_flow(self):
         basket = Basket.objects.create(user=self.user)

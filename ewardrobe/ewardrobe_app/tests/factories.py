@@ -1,6 +1,16 @@
 import factory
+from django.contrib.auth.models import User
 
 from ewardrobe_app import models
+
+
+class UserFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = User
+
+    username = factory.Sequence(lambda n: "john_%s" % n)
+    email = factory.LazyAttribute(lambda o: "%s@example.com" % o.username)
+    password = factory.Sequence(lambda n: "password%s" % n)
 
 
 class BrandFactory(factory.django.DjangoModelFactory):
