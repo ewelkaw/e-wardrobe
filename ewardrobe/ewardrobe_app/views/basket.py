@@ -9,13 +9,30 @@ class BasketView(View):
     failure_url = "products"
 
     def post(self, request):
+        change = request.POST.get("change")
         delete = request.POST.get("delete")
         product_id = request.POST.get("product_id")
         amount = request.POST.get("amount")
         size = request.POST.get("size")
 
+        print(
+            "change",
+            change,
+            "delete",
+            delete,
+            "product_id",
+            product_id,
+            "amount",
+            amount,
+            "size",
+            size,
+        )
         if request.user.is_authenticated:
-            if delete:
+            if change:
+                response = BasketWorkflow(
+                    request.user, product_id, size, 0, change
+                ).change_product_amount()
+            elif delete:
                 response = BasketWorkflow(
                     request.user, product_id, size
                 ).delete_from_basket()

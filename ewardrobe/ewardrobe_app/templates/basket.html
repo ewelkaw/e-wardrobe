@@ -33,6 +33,7 @@
             <th class="col">Name</th>
             <th class="col">Size</th>
             <th class="col">Amount</th>
+            <th class="col">Change amount</th>
             <th class="col">Cost</th>
             <th class="col">Delete</th>
         </tr>
@@ -42,7 +43,23 @@
         <tr>
             <td>{{ products_amount.product.name }}</td>
             <td>{{ products_amount.size }} </td>
-            <td>{{ products_amount.amount }}</td>
+            <td>
+                <form method="post" action="/basket/">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ products_amount.product.id }}">
+                    <input type="hidden" name="size" value="{{ products_amount.size }}">
+                    <input class="btn btn-primary btn-dark" value="-" id="change" name="change" type="submit" />
+                </form>
+                {{ products_amount.amount }}
+                <form method="post" action="/basket/">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ products_amount.product.id }}">
+                    <input type="hidden" name="size" value="{{ products_amount.size }}">
+                    <input class="btn btn-primary btn-dark" value="+" id="change" name="change" type="submit" />
+                </form>
+            </td>
+            </form>
+            </td>
             <td>{{ products_amount.cost }}$</td>
             <td>
                 <form method="post" action="/basket/">
@@ -58,7 +75,9 @@
             <td></td>
             <td></td>
             <td></td>
-            <td>{{ total_cost }}</td>
+            <td><strong>Total cost:</strong></td>
+            <td>{{ total_cost }}$</td>
+            <td></td>
         </tr>
     </tbody>
 </table>
