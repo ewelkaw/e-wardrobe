@@ -143,3 +143,67 @@ class BasketWorkflowTestCase(TestCase):
         assert result["product"] is None
         assert result["total_cost"] == 2 * self.product2.price
 
+    def test_change_single_product_amount(self):
+        BasketWorkflow(
+            product_id=self.product1.id, user=self.user, amount=5, size="S"
+        ).add_product_to_basket()
+
+        result = BasketWorkflow(
+            self.user, self.product1.id, "S", 0, "+"
+        ).change_product_amount()
+
+        basket = Basket.objects.get(status=0, user=self.user)
+
+        assert result["basket"] == basket
+        self.assertQuerysetEqual(
+            result["products_amounts"],
+            ProductsAmount.objects.filter(basket=basket).all(),
+            transform=lambda x: x,
+        )
+        assert result["product"] is None
+        assert result["total_cost"] == 6 * self.product1.price
+
+    def test_change_product_amount_twice(self):
+        BasketWorkflow(
+            product_id=self.product1.id, user=self.user, amount=5, size="S"
+        ).add_product_to_basket()
+
+        BasketWorkflow(self.user, self.product1.id, "S", 0, "-").change_product_amount()
+        result = BasketWorkflow(
+            self.user, self.product1.id, "S", 0, "-"
+        ).change_product_amount()
+        basket = Basket.objects.get(status=0, user=self.user)
+
+        assert result["basket"] == basket
+        self.assertQuerysetEqual(
+            result["products_amounts"],
+            ProductsAmount.objects.filter(basket=basket).all(),
+            transform=lambda x: x,
+        )
+        assert result["product"] is None
+        assert result["total_cost"] == 3 * self.product1.price
+
+    def test_change_products_amount(self):
+        BasketWorkflow(
+            product_id=self.product1.id, user=self.user, amount=5, size="S"
+        ).add_product_to_basket()
+        BasketWorkflow(
+            product_id=self.product2.id, user=self.user, amount=2, size="M"
+        ).add_product_to_basket()
+
+        BasketWorkflow(self.user, self.product1.id, "S", 0, "+").change_product_amount()
+        BasketWorkflow(self.user, self.product1.id, "S", 0, "-").change_product_amount()
+        result = BasketWorkflow(
+            self.user, self.product2.id, "M", 0, "+"
+        ).change_product_amount()
+        basket = Basket.objects.get(status=0, user=self.user)
+
+        assert result["basket"] == basket
+        self.assertQuerysetEqual(
+            result["products_amounts"],
+            ProductsAmount.objects.filter(basket=basket).all(),
+            transform=lambda x: x,
+        )
+        assert result["product"] is None
+        assert result["total_cost"] == 5 * self.product1.price + 3 * self.product2.price
+

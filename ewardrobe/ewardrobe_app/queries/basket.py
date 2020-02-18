@@ -27,7 +27,9 @@ class BasketWorkflow:
         product_amount.amount += int(self.__amount)
         product_amount.save()
 
-        products_amounts = ProductsAmount.objects.filter(basket=basket).all()
+        products_amounts = (
+            ProductsAmount.objects.filter(basket=basket).order_by("product__name").all()
+        )
 
         # in case of performace it can be an issue,
         # but we assume there will be a reasonable amount of products in a single basket
@@ -40,7 +42,9 @@ class BasketWorkflow:
 
     def get_current_basket(self) -> dict:
         basket, _ = Basket.objects.get_or_create(status=0, user=self.__user)
-        products_amounts = ProductsAmount.objects.filter(basket=basket).all()
+        products_amounts = (
+            ProductsAmount.objects.filter(basket=basket).order_by("product__name").all()
+        )
 
         return {
             "basket": basket,
@@ -55,16 +59,15 @@ class BasketWorkflow:
         product_amount = ProductsAmount.objects.get(
             basket=basket, product=product, size=self.__size
         )
-        # import ipdb
-
-        # ipdb.set_trace()
         if self.__action == "+":
             product_amount.amount += 1
         elif self.__action == "-":
             product_amount.amount -= 1
         product_amount.save()
 
-        products_amounts = ProductsAmount.objects.filter(basket=basket).all()
+        products_amounts = (
+            ProductsAmount.objects.filter(basket=basket).order_by("product__name").all()
+        )
         return {
             "basket": basket,
             "products_amounts": products_amounts,
@@ -79,7 +82,9 @@ class BasketWorkflow:
             basket=basket, product=product, size=self.__size
         ).delete()
 
-        products_amounts = ProductsAmount.objects.filter(basket=basket).all()
+        products_amounts = (
+            ProductsAmount.objects.filter(basket=basket).order_by("product__name").all()
+        )
 
         # in case of performace it can be an issue,
         # but we assume there will be a reasonable amount of products in a single basket

@@ -15,18 +15,6 @@ class BasketView(View):
         amount = request.POST.get("amount")
         size = request.POST.get("size")
 
-        print(
-            "change",
-            change,
-            "delete",
-            delete,
-            "product_id",
-            product_id,
-            "amount",
-            amount,
-            "size",
-            size,
-        )
         if request.user.is_authenticated:
             if change:
                 response = BasketWorkflow(
