@@ -9,7 +9,7 @@ from ewardrobe_app.queries.products import ProductsQuery
 
 class ProductsView(View):
     template_name = "products.html"
-    failure_url = "main"
+    failure_url = "login"
     paginate_by = 20
 
     def get(self, request, *args, **kwargs):

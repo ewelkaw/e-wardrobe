@@ -43,8 +43,8 @@
         {% for products_amount in products_amounts %}
         <tr>
             <td>{{ products_amount.product.name }}</td>
-            <td>{{ products_amount.size }} </td>
-            <td>
+            <td class="text-center">{{ products_amount.size }} </td>
+            <td class="text-center">
                 <form method="post" action="/basket/">
                     {% csrf_token %}
                     <input type="hidden" name="product_id" value="{{ products_amount.product.id }}">
@@ -57,10 +57,10 @@
                     {% endif %}
                 </form>
             </td>
-            <td>
+            <td class="text-center">
                 {{ products_amount.amount }}
             </td>
-            <td>
+            <td class="text-center">
                 <form method="post" action="/basket/">
                     {% csrf_token %}
                     <input type="hidden" name="product_id" value="{{ products_amount.product.id }}">
@@ -70,8 +70,8 @@
             </td>
             </form>
             </td>
-            <td>{{ products_amount.cost }}$</td>
-            <td>
+            <td class="text-center">{{ products_amount.cost }}$</td>
+            <td class="text-center">
                 <form method="post" action="/basket/">
                     {% csrf_token %}
                     <input type="hidden" name="product_id" value="{{ products_amount.product.id }}">
@@ -86,9 +86,15 @@
             <td></td>
             <td></td>
             <td></td>
-            <td><strong>Total cost:</strong></td>
-            <td>{{ total_cost }}$</td>
-            <td></td>
+            <td class="text-center"><strong>Total cost:</strong></td>
+            <td class="text-center">{{ total_cost }}$</td>
+            <td class="text-center">
+                <form method="post" action="/orders/">
+                    {% csrf_token %}
+                    <input type="hidden" name="basket" value="{{ basket }}">
+                    <input class="btn btn-primary btn-dark" value="Pay" id="pay" name="pay" type="submit" />
+                </form>
+            </td>
         </tr>
     </tbody>
 </table>

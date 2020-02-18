@@ -95,6 +95,7 @@ class Basket(DateAddedMixin, models.Model):
     status = FSMIntegerField(
         choices=STATUS_CHOICES, default=STATUS_OPENED, protected=True
     )
+    date_created = models.DateField(auto_now_add=True, null=True)
 
     @transition(field=status, source=STATUS_OPENED, target=STATUS_PAID)
     def pay(self):

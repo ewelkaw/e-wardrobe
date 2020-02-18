@@ -34,7 +34,7 @@ class BasketWorkflow:
         # in case of performace it can be an issue,
         # but we assume there will be a reasonable amount of products in a single basket
         return {
-            "basket": basket,
+            "basket": basket.id,
             "products_amounts": products_amounts,
             "product": product,
             "total_cost": self.__calculate_total_cost(products_amounts),
@@ -47,7 +47,7 @@ class BasketWorkflow:
         )
 
         return {
-            "basket": basket,
+            "basket": basket.id,
             "products_amounts": products_amounts,
             "product": None,
             "total_cost": self.__calculate_total_cost(products_amounts),
@@ -69,7 +69,7 @@ class BasketWorkflow:
             ProductsAmount.objects.filter(basket=basket).order_by("product__name").all()
         )
         return {
-            "basket": basket,
+            "basket": basket.id,
             "products_amounts": products_amounts,
             "product": None,
             "total_cost": self.__calculate_total_cost(products_amounts),
@@ -89,7 +89,7 @@ class BasketWorkflow:
         # in case of performace it can be an issue,
         # but we assume there will be a reasonable amount of products in a single basket
         return {
-            "basket": basket,
+            "basket": basket.id,
             "products_amounts": products_amounts,
             "product": None,
             "total_cost": self.__calculate_total_cost(products_amounts),

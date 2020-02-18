@@ -39,11 +39,11 @@
         {% for product in page_obj %}
         <tr class="ml-3 mr-3">
             <td>{{ product.name }}</td>
-            <td>{{ product.price }}$ </td>
-            <td>{{ product.brand }}</td>
-            <td>{{ product.product_category }}</td>
-            <td>{{ product.color }}</td>
-            <td>
+            <td class="text-center">{{ product.price }}$ </td>
+            <td class="text-center">{{ product.brand }}</td>
+            <td class="text-center">{{ product.product_category }}</td>
+            <td class="text-center">{{ product.color }}</td>
+            <td class="text-center">
                 <a class="btn btn-primary btn-dark" href="{% url 'product' product.id %}" name='product' role="button">
                     Details
                 </a>

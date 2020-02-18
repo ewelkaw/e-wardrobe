@@ -6,7 +6,7 @@ from ewardrobe_app.queries.basket import BasketWorkflow
 
 class BasketView(View):
     template_name = "basket.html"
-    failure_url = "products"
+    failure_url = "login"
 
     def post(self, request):
         change = request.POST.get("change")

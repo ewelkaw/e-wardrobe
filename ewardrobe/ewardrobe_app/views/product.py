@@ -6,7 +6,7 @@ from django.urls import reverse
 
 class ProductView(View):
     template_name = "product.html"
-    failure_url = "main"
+    failure_url = "login"
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:

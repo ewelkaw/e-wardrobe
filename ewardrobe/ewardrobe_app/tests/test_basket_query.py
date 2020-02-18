@@ -17,7 +17,7 @@ class BasketWorkflowTestCase(TestCase):
             product_id=self.product1.id, user=self.user, amount=0, size="S"
         ).add_product_to_basket()
         basket = Basket.objects.first()
-        assert result["basket"] == basket
+        assert result["basket"] == basket.id
         self.assertQuerysetEqual(
             result["products_amounts"],
             ProductsAmount.objects.filter(basket=basket).all(),
@@ -31,7 +31,7 @@ class BasketWorkflowTestCase(TestCase):
             product_id=self.product1.id, user=self.user, amount=1, size="S"
         ).add_product_to_basket()
         basket = Basket.objects.first()
-        assert result["basket"] == basket
+        assert result["basket"] == basket.id
         self.assertQuerysetEqual(
             result["products_amounts"],
             ProductsAmount.objects.filter(basket=basket).all(),
@@ -47,7 +47,7 @@ class BasketWorkflowTestCase(TestCase):
         ).add_product_to_basket()
         basket = Basket.objects.first()
 
-        assert result1["basket"] == basket
+        assert result1["basket"] == basket.id
         self.assertQuerysetEqual(
             result1["products_amounts"],
             ProductsAmount.objects.filter(basket=basket).all(),
@@ -61,7 +61,7 @@ class BasketWorkflowTestCase(TestCase):
             product_id=self.product2.id, user=self.user, amount=3, size="M"
         ).add_product_to_basket()
         basket = Basket.objects.first()
-        assert result2["basket"] == basket
+        assert result2["basket"] == basket.id
         self.assertQuerysetEqual(
             result2["products_amounts"],
             ProductsAmount.objects.filter(basket=basket).all(),
@@ -76,7 +76,7 @@ class BasketWorkflowTestCase(TestCase):
     def test_get_default_basket(self):
         result = BasketWorkflow(user=self.user).get_current_basket()
         basket = Basket.objects.get(status=0, user=self.user)
-        assert result["basket"] == basket
+        assert result["basket"] == basket.id
         self.assertQuerysetEqual(
             result["products_amounts"],
             ProductsAmount.objects.filter(basket=basket).all(),
@@ -90,7 +90,7 @@ class BasketWorkflowTestCase(TestCase):
             Basket.objects.create(status=i, user=self.user)
         result = BasketWorkflow(user=self.user).get_current_basket()
         basket = Basket.objects.get(status=0, user=self.user)
-        assert result["basket"] == basket
+        assert result["basket"] == basket.id
         self.assertQuerysetEqual(
             result["products_amounts"],
             ProductsAmount.objects.filter(basket=basket).all(),
@@ -112,7 +112,7 @@ class BasketWorkflowTestCase(TestCase):
         ).delete_from_basket()
         basket = Basket.objects.get(status=0, user=self.user)
 
-        assert result["basket"] == basket
+        assert result["basket"] == basket.id
         self.assertQuerysetEqual(
             result["products_amounts"],
             ProductsAmount.objects.filter(basket=basket).all(),
@@ -134,7 +134,7 @@ class BasketWorkflowTestCase(TestCase):
         ).delete_from_basket()
         basket = Basket.objects.get(status=0, user=self.user)
 
-        assert result["basket"] == basket
+        assert result["basket"] == basket.id
         self.assertQuerysetEqual(
             result["products_amounts"],
             ProductsAmount.objects.filter(basket=basket).all(),
@@ -154,7 +154,7 @@ class BasketWorkflowTestCase(TestCase):
 
         basket = Basket.objects.get(status=0, user=self.user)
 
-        assert result["basket"] == basket
+        assert result["basket"] == basket.id
         self.assertQuerysetEqual(
             result["products_amounts"],
             ProductsAmount.objects.filter(basket=basket).all(),
@@ -174,7 +174,7 @@ class BasketWorkflowTestCase(TestCase):
         ).change_product_amount()
         basket = Basket.objects.get(status=0, user=self.user)
 
-        assert result["basket"] == basket
+        assert result["basket"] == basket.id
         self.assertQuerysetEqual(
             result["products_amounts"],
             ProductsAmount.objects.filter(basket=basket).all(),
@@ -198,7 +198,7 @@ class BasketWorkflowTestCase(TestCase):
         ).change_product_amount()
         basket = Basket.objects.get(status=0, user=self.user)
 
-        assert result["basket"] == basket
+        assert result["basket"] == basket.id
         self.assertQuerysetEqual(
             result["products_amounts"],
             ProductsAmount.objects.filter(basket=basket).all(),
