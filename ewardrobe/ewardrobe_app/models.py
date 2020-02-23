@@ -5,6 +5,21 @@ from django_fsm import transition, FSMIntegerField
 
 # Create your models here.
 
+STATUS_OPENED = 0
+STATUS_PAID = 1
+STATUS_SHIPPED = 2
+STATUS_CLOSED = 3
+STATUS_CANCELLED = 4
+STATUS_RETURNED = 5
+STATUS_CHOICES = (
+    (STATUS_OPENED, "opened"),
+    (STATUS_PAID, "paid"),
+    (STATUS_SHIPPED, "shipped"),
+    (STATUS_CLOSED, "closed"),
+    (STATUS_CANCELLED, "cancelled"),
+    (STATUS_RETURNED, "returned"),
+)
+
 
 class DateAddedMixin(models.Model):
     date_added = models.DateField(auto_now_add=True)
@@ -74,27 +89,13 @@ class Product(DateAddedMixin, models.Model):
 
 
 class Basket(DateAddedMixin, models.Model):
-    STATUS_OPENED = 0
-    STATUS_PAID = 1
-    STATUS_SHIPPED = 2
-    STATUS_CLOSED = 3
-    STATUS_CANCELLED = 4
-    STATUS_RETURNED = 5
-    STATUS_CHOICES = (
-        (STATUS_OPENED, "opened"),
-        (STATUS_PAID, "paid"),
-        (STATUS_SHIPPED, "shipped"),
-        (STATUS_CLOSED, "closed"),
-        (STATUS_CANCELLED, "cancelled"),
-        (STATUS_RETURNED, "returned"),
-    )
-
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     paid = models.BooleanField(default=False)
     products = models.ManyToManyField(Product, through="ProductsAmount")
     status = FSMIntegerField(
         choices=STATUS_CHOICES, default=STATUS_OPENED, protected=True
     )
+    date_created = models.DateField(auto_now_add=True, null=True)
 
     @transition(field=status, source=STATUS_OPENED, target=STATUS_PAID)
     def pay(self):
@@ -124,7 +125,7 @@ class Basket(DateAddedMixin, models.Model):
         line_item.save()
 
     class Meta:
-        ordering = ["user"]
+        ordering = ["date_created"]
         verbose_name_plural = "Baskets"
 
 

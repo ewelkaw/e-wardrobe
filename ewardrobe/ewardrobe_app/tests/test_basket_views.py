@@ -3,7 +3,7 @@ from django.test import Client
 from .factories import ProductFactory, UserFactory
 
 
-class OrderViewTestCase(TestCase):
+class BasketViewTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

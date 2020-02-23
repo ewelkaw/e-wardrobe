@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}This is your current basket!{% endblock %}
+
+{% block main %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark flex-md-nowrap">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="navbar-brand" href="{% url 'orders' %}">Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="navbar-brand" href="{% url 'products' %}">Products</a>
+            </li>
+            <li class="nav-item right" style="float: right;">
+                <a class="navbar-brand" href="{% url 'logout' %}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% if product.name %}
+<p class="h3 my-4 ml-3">You added successfully {{ product.name }} to your basket!</p>
+{% endif %}
+<hr class="my-4 ml-3">
+<p class="lead ml-3"><strong>This is your current basket:</strong></p>
+
+<table class="table table-hover table-light">
+    <thead class="bg-warning">
+        <tr>
+            <th class="col">Name</th>
+            <th class="col">Size</th>
+            <th class="col"></th>
+            <th class="col">Amount</th>
+            <th class="col"></th>
+            <th class="col">Cost</th>
+            <th class="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody class="ml-3">
+        {% for products_amount in products_amounts %}
+        <tr>
+            <td>{{ products_amount.product.name }}</td>
+            <td class="text-center">{{ products_amount.size }} </td>
+            <td class="text-center">
+                <form method="post" action="/basket/">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ products_amount.product.id }}">
+                    <input type="hidden" name="size" value="{{ products_amount.size }}">
+                    {% if products_amount.amount == 0 %}
+                    <input class="btn btn-primary btn-dark" value="-" id="change" name="change" type="submit"
+                        disabled />
+                    {% else %}
+                    <input class="btn btn-primary btn-dark" value="-" id="change" name="change" type="submit" />
+                    {% endif %}
+                </form>
+            </td>
+            <td class="text-center">
+                {{ products_amount.amount }}
+            </td>
+            <td class="text-center">
+                <form method="post" action="/basket/">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ products_amount.product.id }}">
+                    <input type="hidden" name="size" value="{{ products_amount.size }}">
+                    <input class="btn btn-primary btn-dark" value="+" id="change" name="change" type="submit" />
+                </form>
+            </td>
+            </form>
+            </td>
+            <td class="text-center">{{ products_amount.cost }}$</td>
+            <td class="text-center">
+                <form method="post" action="/basket/">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ products_amount.product.id }}">
+                    <input type="hidden" name="size" value="{{ products_amount.size }}">
+                    <input class="btn btn-primary btn-dark" value="Delete" id="delete" name="delete" type="submit" />
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr style="background-color: grey">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="text-center"><strong>Total cost:</strong></td>
+            <td class="text-center">{{ total_cost }}$</td>
+            <td class="text-center">
+                <form method="post" action="/orders/">
+                    {% csrf_token %}
+                    <input type="hidden" name="basket" value="{{ basket }}">
+                    {% if products_amounts %}
+                    <input class="btn btn-primary btn-dark" value="Pay" id="pay" name="pay" type="submit" />
+                    {% else %}
+                    <input class="btn btn-primary btn-dark" value="Pay" id="pay" name="pay" type="submit" disabled />
+                    {% endif %}
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+
+</html>

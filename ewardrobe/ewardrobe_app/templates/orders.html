@@ -18,3 +18,33 @@
         </ul>
     </div>
 </nav>
+
+<p class="h3 my-4 ml-3">Those are your orders!</p>
+<hr class="my-4 ml-3">
+<p class="lead ml-3"><strong>Manage them as you wish!</strong></p>
+
+<table class="table table-hover table-light">
+    <thead class="bg-warning">
+        <tr>
+            <th class="col">Orders</th>
+            <th class=" col" class="text-center">Status</th>
+            <th class="col" class="text-center">Date created</th>
+            <th class=" col" colspan="2" class="text-center">Possible actions</th>
+        </tr>
+    </thead>
+    <tbody class=" ml-3">
+        {% for order_data in orders_data %}
+        <tr>
+            <td class="text-center">Order {{ order_data.order.id }}</td>
+            <td class="text-center">{{ order_data.status_name }}</td>
+            <td class="text-center">{{ order_data.order.date_created }}</td>
+            {% for avaliable_status in order_data.avaliable_statuses %}
+            <td class="text-center">{{ avaliable_status }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+</html>
