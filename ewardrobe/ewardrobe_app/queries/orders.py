@@ -13,7 +13,6 @@ class OrderWorkflow:
             Basket.objects.filter(user=self.__user)
             .exclude(status=STATUS_OPENED)
             .order_by("-date_created")
-            .all()
         ):
 
             orders_data.append(
@@ -24,9 +23,7 @@ class OrderWorkflow:
                 }
             )
 
-        return {
-            "orders_data": orders_data,
-        }
+        return orders_data
 
     def __prepare_transitions(self, order: Basket) -> list:
         return [

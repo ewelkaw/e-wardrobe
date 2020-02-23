@@ -34,7 +34,7 @@ class OrdersView(View):
             return render(
                 request,
                 self.template_name,
-                OrderWorkflow(request.user).prepare_baskets(),
+                {"orders_data": OrderWorkflow(request.user).prepare_baskets()},
             )
         else:
             return redirect(reverse(self.failure_url))
@@ -44,7 +44,7 @@ class OrdersView(View):
             return render(
                 request,
                 self.template_name,
-                OrderWorkflow(request.user).prepare_baskets(),
+                {"orders_data": OrderWorkflow(request.user).prepare_baskets()},
             )
         else:
             return redirect(reverse(self.failure_url))
