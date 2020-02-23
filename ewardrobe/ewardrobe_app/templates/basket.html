@@ -101,11 +101,10 @@
                 <form method="post" action="/orders/">
                     {% csrf_token %}
                     <input type="hidden" name="basket" value="{{ basket }}">
-                    {% if products_amounts %}
-                    <input class="btn btn-primary btn-dark" value="Pay" id="pay" name="pay" type="submit" />
-                    {% else %}
-                    <input class="btn btn-primary btn-dark" value="Pay" id="pay" name="pay" type="submit" disabled />
-                    {% endif %}
+                    <input type="hidden" name="pay" value="pay">
+                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ key }}"
+                        data-description="A Django Charge" data-amount="{{ total_cost_in_cents }}" data-locale="auto">
+                        </script>
                 </form>
             </td>
         </tr>
