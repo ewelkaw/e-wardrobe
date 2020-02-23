@@ -12,25 +12,24 @@ class OrdersView(View):
     def post(self, request):
         if request.user.is_authenticated:
             basket_id = request.POST.get("basket")
-            basket = Basket.objects.filter(user=request.user, id=basket_id)
-            action = request.POST.get("action", None)
+            basket = Basket.objects.get(user=request.user, id=basket_id)
 
-            # print("basket_id", basket_id, "basket", basket, "action", action)
-            if action == "Pay":
+            if request.POST.get("pay"):
                 basket.pay()
 
-            if action == "Cancel":
+            if request.POST.get("cancel"):
                 basket.cancel()
 
-            if action == "Ship":
+            if request.POST.get("ship"):
                 basket.ship()
 
-            if action == "Give back":
+            if request.POST.get("give_back"):
                 basket.give_back()
 
-            if action == "Close":
+            if request.POST.get("close"):
                 basket.close()
 
+            basket.save()
             return render(
                 request,
                 self.template_name,

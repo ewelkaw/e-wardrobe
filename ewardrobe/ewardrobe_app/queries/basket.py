@@ -68,6 +68,7 @@ class BasketWorkflow:
         products_amounts = (
             ProductsAmount.objects.filter(basket=basket).order_by("product__name").all()
         )
+
         return {
             "basket": basket.id,
             "products_amounts": products_amounts,
