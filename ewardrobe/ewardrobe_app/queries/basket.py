@@ -1,4 +1,4 @@
-from ewardrobe_app.models import Product, Basket, ProductsAmount
+from ewardrobe_app.models import Product, Basket, ProductsAmount, STATUS_OPENED
 from django.contrib.auth.models import User
 
 
@@ -19,7 +19,7 @@ class BasketWorkflow:
 
     def add_product_to_basket(self) -> dict:
         product = Product.objects.get(id=self.__product_id)
-        basket, _ = Basket.objects.get_or_create(status=0, user=self.__user)
+        basket, _ = Basket.objects.get_or_create(status=STATUS_OPENED, user=self.__user)
 
         product_amount, _ = ProductsAmount.objects.get_or_create(
             basket=basket, product=product, size=self.__size
@@ -41,7 +41,7 @@ class BasketWorkflow:
         }
 
     def get_current_basket(self) -> dict:
-        basket, _ = Basket.objects.get_or_create(status=0, user=self.__user)
+        basket, _ = Basket.objects.get_or_create(status=STATUS_OPENED, user=self.__user)
         products_amounts = (
             ProductsAmount.objects.filter(basket=basket).order_by("product__name").all()
         )
@@ -55,13 +55,14 @@ class BasketWorkflow:
 
     def change_product_amount(self) -> dict:
         product = Product.objects.get(id=self.__product_id)
-        basket = Basket.objects.get(status=0, user=self.__user)
+        basket = Basket.objects.get(status=STATUS_OPENED, user=self.__user)
         product_amount = ProductsAmount.objects.get(
             basket=basket, product=product, size=self.__size
         )
+
         if self.__action == "+":
             product_amount.amount += 1
-        elif self.__action == "-":
+        elif self.__action == "-" and product_amount.amount > 1:
             product_amount.amount -= 1
         product_amount.save()
 
@@ -78,7 +79,7 @@ class BasketWorkflow:
 
     def delete_from_basket(self) -> dict:
         product = Product.objects.get(id=self.__product_id)
-        basket = Basket.objects.get(status=0, user=self.__user)
+        basket = Basket.objects.get(status=STATUS_OPENED, user=self.__user)
         product_amount = ProductsAmount.objects.get(
             basket=basket, product=product, size=self.__size
         ).delete()

@@ -81,7 +81,7 @@
             </td>
         </tr>
         {% endfor %}
-        <tr style="background-color: grey;">
+        <tr style="background-color: grey">
             <td></td>
             <td></td>
             <td></td>
@@ -101,7 +101,11 @@
                 <form method="post" action="/orders/">
                     {% csrf_token %}
                     <input type="hidden" name="basket" value="{{ basket }}">
+                    {% if products_amounts %}
                     <input class="btn btn-primary btn-dark" value="Pay" id="pay" name="pay" type="submit" />
+                    {% else %}
+                    <input class="btn btn-primary btn-dark" value="Pay" id="pay" name="pay" type="submit" disabled />
+                    {% endif %}
                 </form>
             </td>
         </tr>

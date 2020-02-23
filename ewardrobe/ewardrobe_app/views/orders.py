@@ -1,7 +1,7 @@
 from django.views.generic import View
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from ewardrobe_app.models import Basket
+from ewardrobe_app.models import Basket, ProductsAmount
 from ewardrobe_app.queries.orders import OrderWorkflow
 
 
@@ -15,7 +15,8 @@ class OrdersView(View):
             basket = Basket.objects.get(user=request.user, id=basket_id)
 
             if request.POST.get("pay"):
-                basket.pay()
+                if ProductsAmount.objects.filter(basket=basket).all():
+                    basket.pay()
 
             if request.POST.get("cancel"):
                 basket.cancel()

@@ -1,7 +1,7 @@
 from django.test import TestCase
 from ewardrobe_app.queries.basket import BasketWorkflow
 from .factories import ProductFactory, UserFactory
-from ewardrobe_app.models import Basket, ProductsAmount
+from ewardrobe_app.models import Basket, ProductsAmount, STATUS_OPENED
 
 
 class BasketWorkflowTestCase(TestCase):
@@ -75,7 +75,7 @@ class BasketWorkflowTestCase(TestCase):
 
     def test_get_default_basket(self):
         result = BasketWorkflow(user=self.user).get_current_basket()
-        basket = Basket.objects.get(status=0, user=self.user)
+        basket = Basket.objects.get(status=STATUS_OPENED, user=self.user)
         assert result["basket"] == basket.id
         self.assertQuerysetEqual(
             result["products_amounts"],
@@ -89,7 +89,7 @@ class BasketWorkflowTestCase(TestCase):
         for i in range(3):
             Basket.objects.create(status=i, user=self.user)
         result = BasketWorkflow(user=self.user).get_current_basket()
-        basket = Basket.objects.get(status=0, user=self.user)
+        basket = Basket.objects.get(status=STATUS_OPENED, user=self.user)
         assert result["basket"] == basket.id
         self.assertQuerysetEqual(
             result["products_amounts"],
@@ -110,7 +110,7 @@ class BasketWorkflowTestCase(TestCase):
         result = BasketWorkflow(
             product_id=self.product1.id, user=self.user, size="S"
         ).delete_from_basket()
-        basket = Basket.objects.get(status=0, user=self.user)
+        basket = Basket.objects.get(status=STATUS_OPENED, user=self.user)
 
         assert result["basket"] == basket.id
         self.assertQuerysetEqual(
@@ -132,7 +132,7 @@ class BasketWorkflowTestCase(TestCase):
         result = BasketWorkflow(
             product_id=self.product1.id, user=self.user, size="S"
         ).delete_from_basket()
-        basket = Basket.objects.get(status=0, user=self.user)
+        basket = Basket.objects.get(status=STATUS_OPENED, user=self.user)
 
         assert result["basket"] == basket.id
         self.assertQuerysetEqual(
@@ -152,7 +152,7 @@ class BasketWorkflowTestCase(TestCase):
             self.user, self.product1.id, "S", 0, "+"
         ).change_product_amount()
 
-        basket = Basket.objects.get(status=0, user=self.user)
+        basket = Basket.objects.get(status=STATUS_OPENED, user=self.user)
 
         assert result["basket"] == basket.id
         self.assertQuerysetEqual(
@@ -172,7 +172,7 @@ class BasketWorkflowTestCase(TestCase):
         result = BasketWorkflow(
             self.user, self.product1.id, "S", 0, "-"
         ).change_product_amount()
-        basket = Basket.objects.get(status=0, user=self.user)
+        basket = Basket.objects.get(status=STATUS_OPENED, user=self.user)
 
         assert result["basket"] == basket.id
         self.assertQuerysetEqual(
@@ -196,7 +196,7 @@ class BasketWorkflowTestCase(TestCase):
         result = BasketWorkflow(
             self.user, self.product2.id, "M", 0, "+"
         ).change_product_amount()
-        basket = Basket.objects.get(status=0, user=self.user)
+        basket = Basket.objects.get(status=STATUS_OPENED, user=self.user)
 
         assert result["basket"] == basket.id
         self.assertQuerysetEqual(
