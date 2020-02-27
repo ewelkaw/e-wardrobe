@@ -9,14 +9,12 @@ STATUS_OPENED = 0
 STATUS_PAID = 1
 STATUS_SHIPPED = 2
 STATUS_CLOSED = 3
-STATUS_CANCELLED = 4
-STATUS_RETURNED = 5
+STATUS_RETURNED = 4
 STATUS_CHOICES = (
     (STATUS_OPENED, "opened"),
     (STATUS_PAID, "paid"),
     (STATUS_SHIPPED, "shipped"),
     (STATUS_CLOSED, "closed"),
-    (STATUS_CANCELLED, "cancelled"),
     (STATUS_RETURNED, "returned"),
 )
 
@@ -90,21 +88,14 @@ class Product(DateAddedMixin, models.Model):
 
 class Basket(DateAddedMixin, models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    paid = models.BooleanField(default=False)
     products = models.ManyToManyField(Product, through="ProductsAmount")
-    status = FSMIntegerField(
-        choices=STATUS_CHOICES, default=STATUS_OPENED, protected=True
-    )
+    status = FSMIntegerField(choices=STATUS_CHOICES, default=STATUS_OPENED)
+    date_modified = models.DateField(auto_now=True, null=True)
     date_created = models.DateField(auto_now_add=True, null=True)
 
     @transition(field=status, source=STATUS_OPENED, target=STATUS_PAID)
     def pay(self):
-        self.paid = True
         print("Pay for the order")
-
-    @transition(field=status, source=STATUS_OPENED, target=STATUS_CANCELLED)
-    def cancel(self):
-        print("Cancel the order")
 
     @transition(field=status, source=STATUS_PAID, target=STATUS_SHIPPED)
     def ship(self):
