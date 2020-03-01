@@ -1,7 +1,7 @@
 from django.views.generic import View
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from ewardrobe_app.queries.basket import BasketWorkflow
+from ewardrobe_app.workflows.basket import BasketWorkflow
 
 
 class BasketView(View):
@@ -30,7 +30,7 @@ class BasketView(View):
                 ).add_product_to_basket()
             return render(request, self.template_name, response)
         else:
-            return redirect(reverse(self.failure_url), id=product_id)
+            return redirect(reverse(self.failure_url))
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:

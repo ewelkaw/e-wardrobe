@@ -1,5 +1,5 @@
 from django.test import TestCase
-from ewardrobe_app.queries.basket import BasketWorkflow
+from ewardrobe_app.workflows.basket import BasketWorkflow
 from .factories import ProductFactory, UserFactory
 from ewardrobe_app.models import Basket, ProductsAmount, STATUS_OPENED
 

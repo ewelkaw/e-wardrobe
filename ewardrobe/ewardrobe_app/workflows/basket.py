@@ -1,5 +1,6 @@
 from ewardrobe_app.models import Product, Basket, ProductsAmount, STATUS_OPENED
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class BasketWorkflow:
@@ -38,6 +39,7 @@ class BasketWorkflow:
             "products_amounts": products_amounts,
             "product": product,
             "total_cost": self.__calculate_total_cost(products_amounts),
+            "key": settings.STRIPE_PUBLISHABLE_KEY,
         }
 
     def get_current_basket(self) -> dict:
@@ -51,6 +53,10 @@ class BasketWorkflow:
             "products_amounts": products_amounts,
             "product": None,
             "total_cost": self.__calculate_total_cost(products_amounts),
+            "total_cost_in_cents": int(
+                self.__calculate_total_cost(products_amounts) * 100
+            ),
+            "key": settings.STRIPE_PUBLISHABLE_KEY,
         }
 
     def change_product_amount(self) -> dict:
@@ -75,12 +81,13 @@ class BasketWorkflow:
             "products_amounts": products_amounts,
             "product": None,
             "total_cost": self.__calculate_total_cost(products_amounts),
+            "key": settings.STRIPE_PUBLISHABLE_KEY,
         }
 
     def delete_from_basket(self) -> dict:
         product = Product.objects.get(id=self.__product_id)
         basket = Basket.objects.get(status=STATUS_OPENED, user=self.__user)
-        product_amount = ProductsAmount.objects.get(
+        ProductsAmount.objects.get(
             basket=basket, product=product, size=self.__size
         ).delete()
 
@@ -95,6 +102,7 @@ class BasketWorkflow:
             "products_amounts": products_amounts,
             "product": None,
             "total_cost": self.__calculate_total_cost(products_amounts),
+            "key": settings.STRIPE_PUBLISHABLE_KEY,
         }
 
     def __calculate_total_cost(self, products_amounts):
