@@ -33,31 +33,6 @@ class BasketAdmin(admin.ModelAdmin):
         "date_created",
     )
 
-    # def process_deposit(self, request, *args, **kwargs):
-    #     return self.process_action(request=request, action_title="Ship")
-
-    # def process_withdraw(self, request, *args, **kwargs):
-    #     return self.process_action(request=request, action_title="Close")
-
-    # def basket_actions(self, obj):
-    #     if obj.status == STATUS_PAID:
-    #         return format_html(
-    #             '<a class="button" href="{}">Ship</a>&nbsp;',
-    #             reverse("admin:admin", kwargs={"ship": "ship", "basket": obj.id}),
-    #         )
-    #     if obj.status == STATUS_SHIPPED:
-    #         return format_html(
-    #             '<a class="button" href="{}">Close</a>&nbsp;',
-    #             reverse("admin:admin", kwargs={"close": "close", "basket": obj.id}),
-    #         )
-
-    # basket_actions.short_description = "Basket Actions"
-    # basket_actions.allow_tags = True
-
-    # def process_action(self, request, action_title):
-    #     account = self.get_object(request, account_id)
-    #     if request.method != 'POST':
-
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ("name", "brand", "product_category", "retailer")

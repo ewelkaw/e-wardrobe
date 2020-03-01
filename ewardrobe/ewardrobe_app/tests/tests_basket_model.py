@@ -52,14 +52,14 @@ class BasketTestCase(TestCase):
         assert basket.status == 2
 
         basket.give_back()
-        assert basket.status == 5
+        assert basket.status == 4
 
-    def test_basket_open_cancel_flow(self):
+    def test_basket_open_pay_flow(self):
         basket = Basket.objects.create(user=self.user)
         assert basket.status == 0
 
-        basket.cancel()
-        assert basket.status == 4
+        basket.pay()
+        assert basket.status == 1
 
     def test_basket_give_back_status_fail(self):
         basket = Basket.objects.create(user=self.user)
@@ -85,7 +85,8 @@ class BasketTestCase(TestCase):
     def test_basket_paid_status_fail(self):
         basket = Basket.objects.create(user=self.user)
         assert basket.status == 0
-        basket.cancel()
+        basket.pay()
+        basket.ship()
 
         with pytest.raises(TransitionNotAllowed):
             basket.pay()
