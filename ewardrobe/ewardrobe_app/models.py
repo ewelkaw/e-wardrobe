@@ -89,7 +89,9 @@ class Product(DateAddedMixin, models.Model):
 class Basket(DateAddedMixin, models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product, through="ProductsAmount")
-    status = FSMIntegerField(choices=STATUS_CHOICES, default=STATUS_OPENED)
+    status = FSMIntegerField(
+        choices=STATUS_CHOICES, default=STATUS_OPENED, protected=True
+    )
     date_modified = models.DateField(auto_now=True, null=True)
     date_created = models.DateField(auto_now_add=True, null=True)
 

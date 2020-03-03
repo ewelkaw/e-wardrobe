@@ -28,14 +28,8 @@ class OrdersView(View):
                     self.__make_payment(request, prepared_basket["total_cost_in_cents"])
                     basket.pay()
 
-            if request.POST.get("ship"):
-                basket.ship()
-
             if request.POST.get("give_back"):
                 basket.give_back()
-
-            if request.POST.get("close"):
-                basket.close()
 
             basket.save()
             return render(
