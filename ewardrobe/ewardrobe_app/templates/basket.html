@@ -100,7 +100,7 @@
             <td class="text-center">
                 <form method="post" action="/orders/">
                     {% csrf_token %}
-                    <input type="hidden" name="basket" value="{{ basket }}">
+                    <input type="hidden" name="basket_id" value="{{ basket }}">
                     <input type="hidden" name="pay" value="pay">
                     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ key }}"
                         data-description="A Django Charge" data-amount="{{ total_cost_in_cents }}" data-locale="auto">

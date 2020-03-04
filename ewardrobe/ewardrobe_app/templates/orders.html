@@ -40,9 +40,15 @@
             <td class="text-center">{{ order_data.status_name }}</td>
             <td class="text-center">{{ order_data.order.date_created }}</td>
             <td class="text-center">{{ order_data.order.date_modified }}</td>
-            {% for avaliable_status in order_data.avaliable_statuses %}
-            <td class="text-center">{{ avaliable_status }}</td>
-            {% endfor %}
+            <td class="text-center">
+                {% if order_data.return_status %}
+                    <form method="post" action="/orders/">
+                        {% csrf_token %}
+                        <input type="hidden" name="basket_id" value="{{ order_data.order.id }}">
+                        <input class="btn btn-primary btn-dark" value="Return" id="return" name="return" type="submit" />
+                    </form>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </tbody>
