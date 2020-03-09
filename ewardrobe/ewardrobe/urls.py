@@ -28,9 +28,8 @@ from ewardrobe_app.views.orders import OrdersView
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    # path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
-    # path("ewardrobe_admin/", admin.site.urls, name="ewardrobe_admin"),
+    path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
+    path("ewardrobe_admin/", admin.site.urls, name="ewardrobe_admin"),
     path("", WelcomeView.as_view(), name="welcome"),
     path("register/", UserRegisterView.as_view(), name="register"),
     path("login/", UserLoginView.as_view(), name="login"),
