@@ -19,7 +19,7 @@ class OrdersView(View):
 
     def post(self, request):
         if request.user.is_authenticated:
-            basket_id = request.POST.get("basket")
+            basket_id = request.POST.get("basket_id")
             basket = Basket.objects.get(user=request.user, id=basket_id)
             prepared_basket = BasketWorkflow(user=request.user).get_current_basket()
 
@@ -28,7 +28,7 @@ class OrdersView(View):
                     self.__make_payment(request, prepared_basket["total_cost_in_cents"])
                     basket.pay()
 
-            if request.POST.get("give_back"):
+            if request.POST.get("return"):
                 basket.give_back()
 
             basket.save()
@@ -57,4 +57,3 @@ class OrdersView(View):
             description="A Django charge",
             source=request.POST["stripeToken"],
         )
-
