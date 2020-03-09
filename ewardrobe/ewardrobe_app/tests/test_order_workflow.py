@@ -49,7 +49,6 @@ class OrderWorkflowTestCase(TestCase):
 
     def test_orders_return_status_workflow(self):
         orders = OrderWorkflow(user=self.user2).prepare_baskets()
-        print("orders", orders)
         assert isinstance(orders[0]["order"], Basket)
         assert orders[0]["status_name"] in ["Shipped"]
         assert orders[0]["return_status"]
