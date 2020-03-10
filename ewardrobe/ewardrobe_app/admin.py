@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import reverse, path
 from datetime import datetime
-from django.shortcuts import redirect, reverse
+from django.shortcuts import redirect
+from django.core.mail import send_mail
 
 from .models import (
     Brand,
@@ -42,6 +43,9 @@ class BasketAdmin(admin.ModelAdmin):
         basket = Basket.objects.get(id=basket_id)
         basket.ship()
         basket.save()
+        self.send_confirmation_mail(
+            request.user.username, request.user.email, basket_id
+        )
         return redirect(reverse("admin:ewardrobe_app_basket_changelist"))
 
     def process_closing(self, request, *args, **kwargs):
@@ -85,6 +89,17 @@ class BasketAdmin(admin.ModelAdmin):
     @staticmethod
     def count_closing_date(date_modified):
         return (datetime.now().date() - date_modified).days > 14
+
+    @staticmethod
+    def send_confirmation_mail(name, email, number):
+        send_mail(
+            f"{name} Your order has been shipped!",
+            f"""The order number {number} has ben already sent to you and should be delivered anytime now!
+            Remember that you have 14 days to return it.""",
+            "little_ewardrobe@orders.com",
+            [email],
+            fail_silently=False,
+        )
 
     basket_actions.short_description = "Basket Actions"
     basket_actions.allow_tags = True
