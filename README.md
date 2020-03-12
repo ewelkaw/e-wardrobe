@@ -41,6 +41,7 @@ go to: http://127.0.0.1:8000/admin/
 ```
 
 8. Finite state machine in django
+
 https://medium.com/@distillerytech/building-for-flexibility-using-finite-state-machines-in-django-2e36ddbd7708
 
 `pip install django-fsm`

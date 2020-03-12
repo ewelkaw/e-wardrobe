@@ -1,3 +1,4 @@
+import logging
 from django.db import models
 from django.contrib.auth.models import User
 from django.db import transaction
@@ -17,6 +18,8 @@ STATUS_CHOICES = (
     (STATUS_CLOSED, "closed"),
     (STATUS_RETURNED, "returned"),
 )
+
+logger = logging.getLogger(__name__)
 
 
 class DateAddedMixin(models.Model):
@@ -97,19 +100,19 @@ class Basket(DateAddedMixin, models.Model):
 
     @transition(field=status, source=STATUS_OPENED, target=STATUS_PAID)
     def pay(self):
-        print("Pay for the order")
+        logger.info("The order has been paid!")
 
     @transition(field=status, source=STATUS_PAID, target=STATUS_SHIPPED)
     def ship(self):
-        print("Ship the order")
+        logger.info("The order has been shipped!")
 
     @transition(field=status, source=STATUS_SHIPPED, target=STATUS_RETURNED)
     def give_back(self):
-        print("Return the order")
+        logger.info("The order has been returned!")
 
     @transition(field=status, source=STATUS_SHIPPED, target=STATUS_CLOSED)
     def close(self):
-        print("Close the order")
+        logger.info("The order has been closed!")
 
     @transaction.atomic
     def add_product(self, product):
