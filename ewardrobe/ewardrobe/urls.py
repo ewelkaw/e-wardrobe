@@ -14,7 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.contrib.auth import views as auth_views
+from django.urls import path, include, re_path
 
 from ewardrobe_app.views.main import MainView
 from ewardrobe_app.views.welcome import WelcomeView
@@ -34,6 +35,24 @@ urlpatterns = [
     path("register/", UserRegisterView.as_view(), name="register"),
     path("login/", UserLoginView.as_view(), name="login"),
     path("logout/", UserLogoutView.as_view(), name="logout"),
+    path(
+        "password_reset/", auth_views.PasswordResetView.as_view(), name="password_reset"
+    ),
+    path(
+        "password_reset/done/",
+        auth_views.PasswordResetDoneView.as_view(),
+        name="password_reset_done",
+    ),
+    re_path(
+        "reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/",
+        auth_views.PasswordResetConfirmView.as_view(),
+        name="password_reset_confirm",
+    ),
+    path(
+        "reset/done/",
+        auth_views.PasswordResetCompleteView.as_view(),
+        name="password_reset_complete",
+    ),
     path("main/", MainView.as_view(), name="main"),
     path("products/<int:id>", ProductView.as_view(), name="product"),
     path("products/", ProductsView.as_view(), name="products"),
