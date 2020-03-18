@@ -24,6 +24,11 @@
         </div>
         <input type="submit" class="btn btn-primary btn-dark">
     </form>
+    <form class="ml-3" method="post">
+        {% csrf_token %}
+        <p class="ml-3">Have you forgotten password?</p>
+        <a class="btn btn-primary btn-dark ml-3" href="{% url 'password_reset' %}" name='password_reset' role="button">Reset password</a>
+    </form>
 </div>
 {% endblock %}
 
