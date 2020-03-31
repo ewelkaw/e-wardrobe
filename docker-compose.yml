@@ -1,0 +1,20 @@
+version: '3'
+services:
+  db:
+    image: postgres:12.2-alpine
+    restart: always
+    environment: 
+      POSTGRES_DB: ewardrobe
+      POSTGRES_USER: ewardrobe
+      POSTGRES_PASSWORD: ewardrobe
+    networks: backend
+  web:
+    image: ewardrobe
+    ports:
+        - "8000:8000"
+    links:
+        - db
+    depends_on:
+        - db
+    networks: backend
+    command: ["./wait-for-it.sh", "db:5432", "--", "./entrypoint.sh"]

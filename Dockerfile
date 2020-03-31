@@ -8,5 +8,6 @@ COPY pyproject.toml poetry.lock ./
 RUN poetry install
 EXPOSE 8000
 COPY . /app
+COPY ewardrobe/ewardrobe/secrets.docker.json /app/ewardrobe/ewardrobe/secrets.json
 WORKDIR /app/ewardrobe
-CMD poetry run python manage.py runserver
+CMD ./entrypoint.sh
