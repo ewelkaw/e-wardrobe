@@ -108,3 +108,7 @@ __pycache__/
 
 # secrets
 secrets.json
+secrets.docker.json
+
+.vscode
+.env
