@@ -35,13 +35,31 @@ python manage.py runscript load_data
 ```
 
 5. Running server
+
+**locally:**
 ```
 python manage.py runserver
 ```
+**using docker:**
+```
+make build
+make run 
+```
+
+**then in browser:**
+```
+http://localhost:8000/
+```
 
 6. Running tests
+
+**locally:**
 ```
 python manage.py test
+```
+**using docker:**
+```
+
 ```
 
 7. Running with admin panel

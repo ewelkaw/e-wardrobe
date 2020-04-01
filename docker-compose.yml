@@ -7,7 +7,6 @@ services:
       POSTGRES_DB: ewardrobe
       POSTGRES_USER: ewardrobe
       POSTGRES_PASSWORD: ewardrobe
-    networks: backend
   web:
     image: ewardrobe
     ports:
@@ -16,5 +15,4 @@ services:
         - db
     depends_on:
         - db
-    networks: backend
-    command: ["./wait-for-it.sh", "db:5432", "--", "./entrypoint.sh"]
+    command: ["/wait-for-it.sh", "db:5432", "--", "./entrypoint.sh"]
