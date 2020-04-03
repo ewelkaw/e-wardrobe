@@ -53,13 +53,8 @@ http://localhost:8000/
 
 6. Running tests
 
-**locally:**
 ```
 python manage.py test
-```
-**using docker:**
-```
-
 ```
 
 7. Running with admin panel
