@@ -5,11 +5,12 @@ WORKDIR /app
 ENV poetry=1.0.5
 RUN pip3 install "poetry==$poetry"
 COPY pyproject.toml poetry.lock ./
-RUN poetry install
+RUN poetry export --format=requirements.txt > requirements.txt
+RUN pip3 install -r requirements.txt
 EXPOSE 8000
 COPY . /app
 COPY wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
 COPY ewardrobe/ewardrobe/secrets.docker.json /app/ewardrobe/ewardrobe/secrets.json
 WORKDIR /app/ewardrobe
-CMD ./entrypoint.sh
+CMD gunicorn ewardrobe.wsgi --bind 0.0.0.0:$PORT
