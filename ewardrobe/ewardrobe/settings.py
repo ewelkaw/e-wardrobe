@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from ewardrobe.load_secrets import get_secret
+import dj_database_url
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,9 +26,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["still-wave-34774.herokuapp.com"]
 
 
 # Application definition
@@ -86,6 +88,10 @@ EMAIL_HOST_USER = get_secret("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD")
 
 DATABASES = get_secret("DATABASES")
+
+if os.getenv("DATABASE_URL"):
+    DATABASES["default"] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
 
 LOGGING = {
     "version": 1,
