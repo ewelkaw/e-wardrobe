@@ -692,6 +692,17 @@ version = "0.1.9"
 
 [[package]]
 category = "main"
+description = "Radically simplified static file serving for WSGI applications"
+name = "whitenoise"
+optional = false
+python-versions = ">=3.5, <4"
+version = "5.0.1"
+
+[package.extras]
+brotli = ["brotli"]
+
+[[package]]
+category = "main"
 description = "Backport of pathlib-compatible object wrapper for zip files"
 name = "zipp"
 optional = false
@@ -703,7 +714,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "f242bbea6b35b049344c380f930a71b1e992d373109fb69f5f3e1c14bddfb706"
+content-hash = "93c19522c5f21e6b2708ed917ca9c2e1dcbc9acf116ed441a49108c11ecbf937"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1040,6 +1051,10 @@ urllib3 = [
 wcwidth = [
     {file = "wcwidth-0.1.9-py2.py3-none-any.whl", hash = "sha256:cafe2186b3c009a04067022ce1dcd79cb38d8d65ee4f4791b8888d6599d1bbe1"},
     {file = "wcwidth-0.1.9.tar.gz", hash = "sha256:ee73862862a156bf77ff92b09034fc4825dd3af9cf81bc5b360668d425f3c5f1"},
+]
+whitenoise = [
+    {file = "whitenoise-5.0.1-py2.py3-none-any.whl", hash = "sha256:62556265ec1011bd87113fb81b7516f52688887b7a010ee899ff1fd18fd22700"},
+    {file = "whitenoise-5.0.1.tar.gz", hash = "sha256:0f9137f74bd95fa54329ace88d8dc695fbe895369a632e35f7a136e003e41d73"},
 ]
 zipp = [
     {file = "zipp-3.1.0-py3-none-any.whl", hash = "sha256:aa36550ff0c0b7ef7fa639055d797116ee891440eac1a56f378e2d3179e0320b"},

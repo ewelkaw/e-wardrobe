@@ -58,4 +58,5 @@ traitlets==4.3.3
 typed-ast==1.4.0
 urllib3==1.25.8
 wcwidth==0.1.8
+whitenoise==5.0.1
 zipp==0.6.0
