@@ -63,20 +63,25 @@ http://localhost:8000/
 heroku logs
 ```
 
-7. Running tests
+7. Static files on heroku are managed with `collectstatic` and `whitenoise`
+```
+python manage.py collectstatic
+```
+
+8. Running tests
 
 ```
 python manage.py test
 ```
 
-8. Running with admin panel
+9. Running with admin panel
 ```
 python manage.py createsuperuser
 python manage.py runserver
 go to: http://127.0.0.1:8000/admin/
 ```
 
-9. Finite state machine in django
+10. Finite state machine in django
 
 https://medium.com/@distillerytech/building-for-flexibility-using-finite-state-machines-in-django-2e36ddbd7708
 

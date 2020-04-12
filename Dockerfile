@@ -13,4 +13,5 @@ COPY wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
 COPY ewardrobe/ewardrobe/secrets.docker.json /app/ewardrobe/ewardrobe/secrets.json
 WORKDIR /app/ewardrobe
+RUN python manage.py collectstatic
 CMD gunicorn ewardrobe.wsgi --bind 0.0.0.0:$PORT
