@@ -51,20 +51,32 @@ make run
 http://localhost:8000/
 ```
 
-6. Running tests
+6. Pushing changes to production
+```bash
+~/little_ewardrobe$ heroku container:push web
+~/little_ewardrobe$ heroku container:release web
+~/little_ewardrobe$ heroku open
+```
+
+**to track logs**
+```
+heroku logs
+```
+
+7. Running tests
 
 ```
 python manage.py test
 ```
 
-7. Running with admin panel
+8. Running with admin panel
 ```
 python manage.py createsuperuser
 python manage.py runserver
 go to: http://127.0.0.1:8000/admin/
 ```
 
-8. Finite state machine in django
+9. Finite state machine in django
 
 https://medium.com/@distillerytech/building-for-flexibility-using-finite-state-machines-in-django-2e36ddbd7708
 
